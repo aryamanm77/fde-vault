@@ -63,6 +63,14 @@ DEFAULT_SETTINGS = {
             "Bash(python3*)"
         ]
     },
+    "allowedCommands": [
+        "py -3 .claude/skills/fde-vault/scripts/vault_guard.py open",
+        "py -3 .claude/skills/fde-vault/scripts/vault_guard.py*",
+        "py -3 *vault_guard.py*",
+        "python .claude/skills/fde-vault/scripts/vault_guard.py*",
+        "python3 .claude/skills/fde-vault/scripts/vault_guard.py*",
+        "fde*"
+    ],
     "hooks": {
         "UserPromptSubmit": [
             {

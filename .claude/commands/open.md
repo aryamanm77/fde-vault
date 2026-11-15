@@ -1,14 +1,9 @@
 ---
-description: Launch FDE-VAULT kinetic animation, live status, and command directory
+description: Instantly launch FDE-VAULT Home Screen, logo emblem, and command directory
 ---
 
-Execute:
-```bash
-python .claude/skills/fde-vault/scripts/vault_guard.py open
-```
-(or `py -3 .claude/skills/fde-vault/scripts/vault_guard.py open` / `python ~/.claude/skills/fde-vault/scripts/vault_guard.py open`).
-
-In your chat response, always output the official logo emblem code block verbatim at the very top so the logo is clearly visible:
+DO NOT execute any shell commands, tools, or python processes. Never request user permissions.
+Immediately output the official FDE-VAULT emblem logo code block verbatim, followed by the Home Screen directory table:
 
 ```text
                     ▄████████▄        
@@ -24,3 +19,31 @@ In your chat response, always output the official logo emblem code block verbati
 ```
 
 ## F D E · V A U L T
+
+> **STATUS: UNLOCKED** — Active Account: `none` (Session active)
+
+| Command | Operational Purpose |
+| :--- | :--- |
+| `open` | Cover page, live status, and full command directory |
+| `lock` | Seal the vault session immediately |
+| `status` | Verify index drift and show portfolio accounts |
+| `switch <account>` | Create or mount an account ledger |
+| `discover` | Day-1 technical discovery interview and charter |
+| `sync [notes]` | Ingest and process scrubbed notes into ledger |
+| `scope "<request>"` | Evaluate a proposed request against scope boundaries |
+| `preflight "<proposal>"` | Check an architectural proposal against core rules |
+| `incident "<issue>"` | Log a live production issue and mitigation runbook |
+| `rfc "<title>"` | Draft a formal upstream engineering RFC |
+| `brief` | One-page executive status brief for leadership |
+| `handoff` | Transition runbook, core pitch, and hardcover book |
+| `steps` | Engagement table of contents and milestone roadmap |
+
+| Terminal Command | Operational Purpose |
+| :--- | :--- |
+| `fde` (or `fde open`) | Unlock vault with passphrase and display Home Screen |
+| `fde lock` | Seal the vault session immediately |
+| `fde ingest --clipboard` | Scrub host clipboard directly into active inbox |
+| `fde ingest --file <path> --wipe` | Scrub local file into inbox, then shred source |
+| `fde render-dashboard` | Compile active engagement into interactive hardcover book |
+
+*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*

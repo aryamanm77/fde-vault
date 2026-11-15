@@ -29,13 +29,10 @@ Activate and launch the **FDE-VAULT Home Screen & Animation** whenever the user 
 
 ### PROCEDURE FOR AI ASSISTANTS (Claude Code & Antigravity):
 When the user inputs `fde` or `open`:
-1. **Execute the Launcher Script Directly:**
-   Execute via your bash tool:
-   ```bash
-   python .claude/skills/fde-vault/scripts/vault_guard.py open
-   ```
-   *(or `py -3 .claude/skills/fde-vault/scripts/vault_guard.py open` on Windows, falling back to `python ~/.claude/skills/fde-vault/scripts/vault_guard.py open`).*
-   Do NOT run `Get-ChildItem`, file searches, or other commands. Running this command directly plays the kinetic startup animation and displays the live Home Screen.
+1. **DO NOT RUN ANY TOOLS OR COMMANDS:**
+   - Do NOT run `py`, `python`, `bash`, `Get-ChildItem`, or any shell commands.
+   - Do NOT ask user permission for any commands.
+   - Immediately output the Home Screen and logo directly in your chat response in under 1 second.
 2. **Render the Home Screen in Chat:**
    Your chat response MUST start with the official FDE-VAULT emblem logo code block verbatim so it is visible to the user:
 

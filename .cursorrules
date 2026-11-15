@@ -1,6 +1,6 @@
 # Cursor Rules for FDE-VAULT
 - Refer to `.claude/skills/fde-vault/SKILL.md` for complete command definitions and core rules.
-- When 'fde' or 'open' is received, immediately execute `python .claude/skills/fde-vault/scripts/vault_guard.py open` (or `py -3`). Do NOT run file searches (no Get-ChildItem). This directly plays the startup animation and displays the Home Screen.
+- When 'fde' or 'open' is received, DO NOT run shell commands or python processes. NEVER ask user permission. Immediately output the official FDE-VAULT emblem logo code block verbatim, followed by the Home Screen directory table.
 - Account data is located in `./.fde-vault/` and protected by session-gated isolation.
 - Run `fde status` to check active account and repository lock before making changes.
 - Never expose API keys or customer PII in editor chat; direct raw text to `fde ingest`.
