@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/fde-vault-logo.svg" alt="FDE-VAULT Logo" width="760">
+</p>
+
 # FDE-VAULT
 
 <p align="center">
@@ -91,9 +95,20 @@ This scaffolds the canonical architecture:
 
 ## Interactive Terminal Experience
 
-Typing `fde` in an interactive terminal triggers clean typographic startup reveal steps, followed by the Cover Page and Command Directory:
+Typing `fde` in an interactive terminal triggers the geometric logo animation, followed by the Cover Page and Command Directory:
 
-```
+```text
+                    ▄████████▄        
+                  ▄██▀  ██  ▀██▄      ██████   █████▄   ██████
+                 ██▀   ▄██▄   ▀██     ██▄▄     ██  ██   ██▄▄  
+                 ██▄▄▄██████▄▄▄██     ██▀▀     ██  ██   ██▀▀  
+                 ██▀▀▀██████▀▀▀██     ██       █████▀   ██████
+                 ██▄   ▀██▀   ▄██     
+                  ▀██▄  ██  ▄██▀      V A U L T               
+                    ▀████████▀        
+
+                       ● Ready.                        
+
   F D E - V A U L T
   [1/3] Mounting isolated account ledger...
   [2/3] Arming Zero-Chat-Exposure redaction engine...

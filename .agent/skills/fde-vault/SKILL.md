@@ -34,10 +34,18 @@ Activate and render the **FDE-VAULT Home Screen** whenever the user inputs:
    ```
    *(falling back to `py -3` or `python` on Windows).*
 2. **Render the Identical Home Screen in Chat:**
-   Start with the minimalist typographic header:
-   ```markdown
-   ## F D E · V A U L T
+   Start with the official FDE-VAULT geometric emblem logo:
+   ```text
+                    ▄████████▄        
+                  ▄██▀  ██  ▀██▄      ██████   █████▄   ██████
+                 ██▀   ▄██▄   ▀██     ██▄▄     ██  ██   ██▄▄  
+                 ██▄▄▄██████▄▄▄██     ██▀▀     ██  ██   ██▀▀  
+                 ██▀▀▀██████▀▀▀██     ██       █████▀   ██████
+                 ██▄   ▀██▀   ▄██     
+                  ▀██▄  ██  ▄██▀      V A U L T               
+                    ▀████████▀        
    ```
+   ## F D E · V A U L T
    Followed by the live session/account status blockquote:
    - If unlocked:
      `> **STATUS: UNLOCKED** — Active Account: \`<account>\` (Session active)`
