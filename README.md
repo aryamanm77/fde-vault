@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/fde-vault-logo.svg" alt="FDE-VAULT Logo" width="760" />
-</p>
+# FDE-VAULT
 
 <p align="center">
   <strong>Enterprise Forward Deployed Engineering Operating System and Account Ledger</strong><br />
@@ -93,15 +91,13 @@ This scaffolds the canonical architecture:
 
 ## Interactive Terminal Experience
 
-Typing `fde` in an interactive terminal triggers an executive typographic startup reveal inspired by engineering journals, followed by the Cover Page and Command Directory:
+Typing `fde` in an interactive terminal triggers clean typographic startup reveal steps, followed by the Cover Page and Command Directory:
 
 ```
-  +------------------------------------------------------------+
-  |                                                            |
-  |                      F D E - V A U L T                     |
-  |       FORWARD DEPLOYED ENGINEERING OPERATING SYSTEM        |
-  |                                                            |
-  +------------------------------------------------------------+
+  F D E - V A U L T
+  [1/3] Mounting isolated account ledger...
+  [2/3] Arming Zero-Chat-Exposure redaction engine...
+  [3/3] Opening engineering journal...
 ```
 
 ```
@@ -133,25 +129,25 @@ Typing `fde` in an interactive terminal triggers an executive typographic startu
 | `fde render-dashboard` | Compiles the active account into a hardcover book HTML artifact. |
 | `fde passwd` | Updates the master vault authentication passphrase. |
 
-### Chat Slash Commands (Within AI Assistants)
+### Assistant Commands (Plain Words in AI Chat: Antigravity, Claude Code, Cursor, Codex CLI)
 
-When working inside Claude Code, Antigravity, Cursor, or Codex CLI, use these slash commands:
+When working inside Claude Code, Antigravity, Cursor, or Codex CLI, type plain words directly in chat:
 
-| Slash Command | Governance Action |
+| Command | Governance Action |
 | :--- | :--- |
-| `/switch <account>` | Switches active context; creates account directory if not present. |
-| `/discover` | Conducts stakeholder, architecture, and boundary discovery interview. |
-| `/sync` | Processes entries from `inbox.md` into `timeline.md` and `brain.md`. |
-| `/scope` | Evaluates proposed feature request against agreed boundaries. |
-| `/preflight` | Executes an eight-point readiness checklist prior to production deployment. |
-| `/incident` | Initiates incident triage: severity, timeline, and mitigation runbook. |
-| `/rfc` | Drafts a formal Request for Comments for an architectural deviation. |
-| `/brief` | Prepares an executive status briefing for non-technical stakeholders. |
-| `/handoff` | Generates a transition manual for customer engineering teams. |
-| `/steps` | Converts architectural rulings into an atomic implementation plan. |
-| `/status` | Renders high-level health report of the active enterprise engagement. |
-| `/lock` | Seals the local vault session. |
-| `/open` | Unlocks the vault session. |
+| `open` | Cover page, live status, and full command directory. |
+| `lock` | Seals the local vault session immediately. |
+| `status` *(or `vaults`)* | Renders high-level health report of active engagement and portfolio. |
+| `switch <account>` *(or `start`)* | Switches active context; creates account directory if not present. |
+| `discover` | Conducts stakeholder, architecture, and boundary discovery interview. |
+| `sync [notes]` *(or `log`)* | Processes entries from `inbox.md` into `timeline.md` and `brain.md`. |
+| `scope "<request>"` | Evaluates proposed feature request against agreed boundaries. |
+| `preflight "<proposal>"` *(or `guard`)* | Validates proposal against the core rules before touching code. |
+| `incident "<issue>"` | Initiates incident triage: severity, timeline, and mitigation runbook. |
+| `rfc "<title>"` | Drafts a formal Request for Comments for an architectural deviation. |
+| `brief` *(or `report`)* | Prepares an executive status briefing for non-technical stakeholders. |
+| `handoff` *(or `done`)* | Generates a transition manual for customer engineering teams. |
+| `steps` | Engagement table of contents and milestone roadmap. |
 
 ---
 

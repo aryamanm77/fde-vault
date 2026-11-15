@@ -38,7 +38,7 @@ def main():
             "FDE-VAULT firewall: prompt blocked locally and not sent to the model.\n"
             "Detected: %s.\n"
             "Copy the material, run `fde ingest --clipboard` in your own terminal, "
-            "then run /sync here.\n" % vg.summarize_counts(counts))
+            "then run 'sync' here.\n" % vg.summarize_counts(counts))
         sys.exit(2)
     sys.exit(0)
 

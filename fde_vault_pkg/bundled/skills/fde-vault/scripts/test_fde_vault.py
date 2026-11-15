@@ -164,9 +164,9 @@ class OpenFlowTests(VaultCase):
 
     def test_cover_lists_every_assistant_command(self):
         res = self.run_open(PASS + "\n" + PASS + "\n")
-        for token in ("/open", "/lock", "/status", "/switch", "/discover", "/sync",
-                      "/scope", "/preflight", "/incident", "/rfc", "/brief", "/handoff",
-                      "/steps", "fde ingest --clipboard", "fde lock"):
+        for token in ("open", "lock", "status", "switch", "discover", "sync",
+                      "scope", "preflight", "incident", "rfc", "brief", "handoff",
+                      "steps", "fde ingest --clipboard", "fde lock"):
             self.assertIn(token, res.stdout)
 
 
@@ -341,7 +341,7 @@ class HookTests(VaultCase):
         self.assertNotIn(AWS, res.stderr)
 
     def test_prompt_hook_allows_clean_prompt(self):
-        res = self.script("prompt_hook.py", json.dumps({"prompt": "/status"}))
+        res = self.script("prompt_hook.py", json.dumps({"prompt": "status"}))
         self.assertEqual(res.returncode, 0)
 
     def test_prompt_hook_pii_mode_switch(self):
@@ -570,9 +570,9 @@ class ProjectHygieneTests(unittest.TestCase):
     def test_skill_frontmatter_and_commands(self):
         text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
         self.assertTrue(text.startswith("---\nname: fde-vault\ndescription: Enterprise Forward"))
-        for cmd in ("/open", "/lock", "/status", "/vaults", "/switch", "/start", "/discover",
-                    "/sync", "/log", "/scope", "/preflight", "/guard", "/incident", "/rfc",
-                    "/brief", "/report", "/handoff", "/done", "/steps"):
+        for cmd in ("open", "lock", "status", "vaults", "switch", "start", "discover",
+                    "sync", "log", "scope", "preflight", "guard", "incident", "rfc",
+                    "brief", "report", "handoff", "done", "steps"):
             self.assertIn("`%s" % cmd, text)
         for rule in ("RULE-01", "RULE-05", "CRITERIA-GREEN", "CRITERIA-YELLOW", "CRITERIA-RED"):
             self.assertIn(rule, text)
@@ -697,20 +697,20 @@ class PackagingAndInitTests(unittest.TestCase):
         self.assertIn("Active Account :", cover)
         self.assertIn("Store Location :", cover)
         commands = [
-            "/open", "/lock", "/status", "/switch", "/discover", "/sync",
-            "/scope", "/preflight", "/incident", "/rfc", "/brief", "/handoff", "/steps"
+            "open", "lock", "status", "switch", "discover", "sync",
+            "scope", "preflight", "incident", "rfc", "brief", "handoff", "steps"
         ]
         for cmd in commands:
             self.assertIn(cmd, cover)
 
     def test_fde_chat_trigger_documented_in_skill_and_pointers(self):
         skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("AI Chat Entry Triggers (`fde`, `/open`, `/fde`)", skill)
+        self.assertIn("AI Chat Entry Triggers (fde, open)", skill)
         self.assertIn("## F D E · V A U L T", skill)
         for pointer in ("AGENTS.md", "GEMINI.md", "CLAUDE.md", ".cursorrules"):
             text = (self.ROOT / pointer).read_text(encoding="utf-8")
             self.assertIn("fde", text)
-            self.assertIn("/open", text)
+            self.assertIn("open", text)
 
 
 if __name__ == "__main__":

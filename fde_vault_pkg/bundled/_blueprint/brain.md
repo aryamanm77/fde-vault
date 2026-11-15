@@ -23,7 +23,7 @@
 <!-- Systems, integration points and constraints. No credentials. -->
 
 ## Discovery Answers
-<!-- Recorded by /discover. -->
+<!-- Recorded by discover. -->
 
 ## Decisions
 <!-- Dated architectural decisions with the rule IDs that governed them. -->

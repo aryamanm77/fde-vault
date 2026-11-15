@@ -1,6 +1,6 @@
 # Claude Code Agent Instructions
 - Core FDE governance, workflow playbooks, and commands are defined in `.claude/skills/fde-vault/SKILL.md`.
-- Typing 'fde' or '/open' launches the FDE-VAULT Home Screen and command directory.
+- Typing 'fde' or 'open' launches the FDE-VAULT Home Screen and command directory.
 - All client account data is stored in the canonical store `./.fde-vault/` (session-gated isolation).
 - Verify session lock and active account with `fde status` before executing account actions.
 - Do not output live credentials in chat; instruct users to run `fde ingest` for local CPU redaction.

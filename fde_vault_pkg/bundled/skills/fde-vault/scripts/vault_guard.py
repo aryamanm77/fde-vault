@@ -56,19 +56,19 @@ TERMINAL_COMMANDS = [
     ("fde passwd", "Change the vault passphrase"),
 ]
 ASSISTANT_COMMANDS = [
-    ("/open", "Cover page and full command directory"),
-    ("/lock", "Seal the vault session immediately"),
-    ("/status  (/vaults)", "Verify index drift and show the portfolio index"),
-    ("/switch <account>  (/start)", "Create or activate an account ledger"),
-    ("/discover", "Day-1 technical discovery charter"),
-    ("/sync [notes]  (/log)", "Process the scrubbed inbox into the ledger"),
-    ('/scope "<request>"', "Check a request against scope boundaries"),
-    ('/preflight "<proposal>"  (/guard)', "Check a proposal against the core rules"),
-    ('/incident "<issue>"', "Log a live production issue and mitigation"),
-    ('/rfc "<title>"', "Draft an upstream engineering RFC"),
-    ("/brief  (/report)", "One-page executive status brief"),
-    ("/handoff  (/done)", "Runbook, pitch and hardcover dashboard"),
-    ("/steps", "Engagement table of contents"),
+    ("open", "Cover page, live status, and full command directory"),
+    ("lock", "Seal the vault session immediately"),
+    ("status  (or vaults)", "Verify index drift and show portfolio accounts"),
+    ("switch <account>  (or start)", "Create or mount an account ledger"),
+    ("discover", "Day-1 technical discovery interview and charter"),
+    ("sync [notes]  (or log)", "Process scrubbed notes into the active ledger"),
+    ('scope "<request>"', "Check a proposed request against scope boundaries"),
+    ('preflight "<proposal>"  (or guard)', "Check an architectural proposal against core rules"),
+    ('incident "<issue>"', "Log a live production issue and mitigation runbook"),
+    ('rfc "<title>"', "Draft an upstream engineering RFC"),
+    ("brief  (or report)", "One-page executive status brief for leadership"),
+    ("handoff  (or done)", "Transition runbook, core pitch, and hardcover book"),
+    ("steps", "Engagement table of contents and milestone roadmap"),
 ]
 
 BLUEPRINT = {
@@ -91,7 +91,7 @@ BLUEPRINT = {
         "## Architecture Notes\n"
         "<!-- Systems, integration points and constraints. No credentials. -->\n\n"
         "## Discovery Answers\n"
-        "<!-- Recorded by /discover. -->\n\n"
+        "<!-- Recorded by discover. -->\n\n"
         "## Decisions\n"
         "<!-- Dated architectural decisions with the rule IDs that governed them. -->\n\n"
         "## Open Risks\n"
@@ -103,7 +103,7 @@ BLUEPRINT = {
     ),
     "inbox.md": (
         "# Inbox: {{ACCOUNT}}\n\n"
-        "<!-- Scrubbed notes await /sync. Clear with: vault_guard.py inbox-clear -->\n"
+        "<!-- Scrubbed notes await sync. Clear with: vault_guard.py inbox-clear -->\n"
     ),
 }
 
@@ -449,7 +449,7 @@ def active_account(required=True):
     if name and ACCOUNT_RE.match(name) and (vault_dir() / name / "brain.md").exists():
         return name
     if required:
-        die("No active account. Run /switch <account> first.", 4)
+        die("No active account. Run 'switch <account>' first.", 4)
     return ""
 
 
@@ -560,26 +560,7 @@ def play_animation(color):
     if color and os.name == "nt" and sys.stdout.isatty():
         os.system("")
     out = sys.stdout
-    try:
-        script_dir = Path(__file__).resolve().parent
-        if str(script_dir) not in sys.path:
-            sys.path.insert(0, str(script_dir))
-        import logo_anim
-    except Exception:
-        logo_anim = None
-
-    if logo_anim is not None:
-        if sys.stdout.isatty() and color:
-            logo_anim.play_startup_animation(skip=False)
-        else:
-            fn, left, _ = logo_anim._layout()
-            fn = fn or logo_anim._frame_full
-            mode = logo_anim._color_mode() if color else "none"
-            lines = fn(logo_anim.DURATION, logo_anim._Ink(mode), left)
-            out.write("\n" + "\n".join(lines) + "\n\n")
-            out.flush()
-
-    out.write("  " + _paint(IVORY, "F D E - V A U L T", color) + "\n\n")
+    out.write("\n  " + _paint(IVORY, "F D E - V A U L T", color) + "\n\n")
     steps = ["[1/3] Mounting isolated account ledger...",
              "[2/3] Arming Zero-Chat-Exposure redaction engine...",
              "[3/3] Opening engineering journal..."]
@@ -655,7 +636,7 @@ def cmd_open(args):
     if auth_path().exists() and info["active"]:
         print("Session already unlocked; %s remaining. Seal it with: fde lock"
               % fmt_remaining(info["remaining"]))
-        print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+        print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
         return 0
     if not auth_path().exists():
         if tty:
@@ -693,8 +674,8 @@ def cmd_open(args):
         data = create_session()
         expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
         print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
-              "run /status." % expires)
-        print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+              "run status." % expires)
+        print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
         return 0
 
     wait = lockout_remaining()
@@ -710,8 +691,8 @@ def cmd_open(args):
                 data = create_session()
                 expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
                 print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
-                      "run /status." % expires)
-                print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+                      "run status." % expires)
+                print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
                 return 0
             record_failure()
             print("Incorrect passphrase.")
@@ -728,8 +709,8 @@ def cmd_open(args):
                     data = create_session()
                     expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
                     print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
-                          "run /status." % expires)
-                    print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+                          "run status." % expires)
+                    print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
                     return 0
                 else:
                     record_failure()
@@ -980,7 +961,7 @@ def cmd_ingest(args):
     atomic_write(path, existing.rstrip() + "\n\n" + block)
     print("ingested: %d characters into %s/inbox.md" % (len(raw), acct))
     print("redactions: %s" % summarize_counts(counts))
-    print("No content was displayed. Run /sync in your AI tool to process the inbox.")
+    print("No content was displayed. Run 'sync' in your AI tool to process the inbox.")
     if args.file and args.wipe:
         wipe_file(Path(args.file).expanduser())
         print("source file shredded and removed")

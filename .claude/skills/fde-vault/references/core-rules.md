@@ -1,6 +1,6 @@
 # FDE-VAULT Core Rules
 
-Load this file before classifying any request or running `/preflight`. Every
+Load this file before classifying any request or running `preflight`. Every
 classification must cite the rule ID that decided it. Cite the strictest rule
 that applies; cite more than one when several apply.
 
@@ -19,7 +19,7 @@ behavior.
 
 ### RULE-03 — Upstream First
 A gap that other customers are likely to hit is raised as an upstream RFC
-(`/rfc`) before a long-lived local workaround is built. A local workaround
+(`rfc`) before a long-lived local workaround is built. A local workaround
 that outlives its RFC needs an expiry date recorded in the journal.
 
 ### RULE-04 — Secrets and PII Boundary
