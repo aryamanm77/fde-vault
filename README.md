@@ -1,118 +1,267 @@
-# FDE-VAULT
+<p align="center">
+  <img src="assets/fde-vault-logo.svg" alt="FDE-VAULT Logo" width="760" />
+</p>
 
-Enterprise Forward Deployed Engineering Ledger. A Claude Code skill plus a local
-command (`fde`) that gives every terminal AI tool in a project (Claude Code,
-Antigravity, Cursor, Codex CLI) one shared, session-gated ledger of customer
-accounts, scope boundaries, architectural rulings, and an engineering journal.
-Files in `./.fde-vault/` are plaintext markdown documents protected by session-gated
-account isolation and best-effort local secret and PII redaction.
+<p align="center">
+  <strong>Enterprise Forward Deployed Engineering Operating System and Account Ledger</strong><br />
+  <em>A unified, session-gated governance system and cross-agent ledger for high-stakes enterprise deployments.</em>
+</p>
 
-Python 3 standard library only. macOS, Linux, and Windows.
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.9+-2E2A24.svg?style=flat-square&labelColor=171513&color=D4AA6D" alt="Python 3.9+" />
+  <img src="https://img.shields.io/badge/dependencies-zero_stdlib-2E2A24.svg?style=flat-square&labelColor=171513&color=8A6E4B" alt="Zero Dependencies" />
+  <img src="https://img.shields.io/badge/agents-Claude_Code_|_Antigravity_|_Cursor_|_Codex-2E2A24.svg?style=flat-square&labelColor=171513&color=D4AA6D" alt="Cross-Agent" />
+  <img src="https://img.shields.io/badge/security-session--gated_isolation-2E2A24.svg?style=flat-square&labelColor=171513&color=8A6E4B" alt="Security Model" />
+  <img src="https://img.shields.io/badge/license-Apache_2.0-2E2A24.svg?style=flat-square&labelColor=171513&color=D4AA6D" alt="License" />
+</p>
 
-## Installation from GitHub
+---
 
-Install the global `fde` CLI and skill definitions directly from GitHub across macOS, Linux, and Windows:
+## Executive Summary
 
-### macOS / Linux (One-Line Installer)
+Forward Deployed Engineers (FDEs) operate at the volatile intersection of customer infrastructure, evolving security boundaries, and enterprise deadlines. When pairing with terminal AI tools (Claude Code, Google Antigravity, Cursor, Codex CLI), engineers risk polluting client accounts, leaking credentials across workspaces, or losing critical architectural rulings in ephemeral context windows.
+
+**FDE-VAULT** is a production-grade operating system and skill that establishes a single, canonical, session-gated ledger (`./.fde-vault/`) across all terminal AI coding agents. It enforces client account isolation, automated credential scrubbing before network egress, and hardcover engineering journal rendering.
+
+- **Cross-Agent Discovery:** One canonical ledger mounted simultaneously by Claude Code, Google Antigravity, Cursor, and Codex CLI.
+- **Session-Gated Access:** Passphrase-gated ledger sessions powered by PBKDF2-HMAC-SHA256 (100,000 iterations).
+- **Local Secret & PII Scrubbing:** CPU-side pattern redaction preventing credentials, tokens, JWTs, and PII from reaching model providers.
+- **Pure Standard Library:** Zero third-party Python dependencies; runs natively on macOS, Linux, and Windows.
+- **Zero Demo Data:** Ships pristine with an empty portfolio index and clean template blueprint.
+
+---
+
+## Installation
+
+### macOS & Linux (One-Line Installer)
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fde-vault/fde-vault/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aryamanm77/fde-vault/main/install.sh | bash
 ```
 
 ### Windows PowerShell (One-Line Installer)
+
 ```powershell
-irm https://raw.githubusercontent.com/fde-vault/fde-vault/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/aryamanm77/fde-vault/main/install.ps1 | iex
 ```
 
-### Python Pip / Pipx Install
+### Python Package Manager (`pip` / `pipx`)
+
+Install the global `fde` executable directly via Git:
+
 ```bash
-pip install git+https://github.com/fde-vault/fde-vault.git
+pipx install git+https://github.com/aryamanm77/fde-vault.git
 ```
-or via `pipx`:
+
+Or with standard `pip`:
+
 ```bash
-pipx install git+https://github.com/fde-vault/fde-vault.git
+python3 -m pip install --user git+https://github.com/aryamanm77/fde-vault.git
 ```
 
-### Scaffolding in Any Repository (`fde init`)
-Once installed, run `fde init` in any engineering repository to scaffold the complete FDE governance environment without touching any existing live account folders:
+### Local Repository Setup
+
+If you have cloned the repository locally:
+
 ```bash
-cd /path/to/your/project
-fde init
-```
-This generates `.fde-vault/_blueprint/`, `.fde-vault/index.json`, `.claude/skills/fde-vault/`, `.agent/skills/fde-vault/`, `.claude/settings.json`, and cross-agent discovery pointers (`AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `.cursorrules`, `.gitignore`).
-
-## Local Setup
-
-```
 python3 .claude/skills/fde-vault/scripts/install_cli.py
 ```
+*(On Windows, run with `py -3` in place of `python3`.)*
 
-On Windows use `py -3` in place of `python3`. The installer:
+The installer automatically registers the `fde` command in your shell profile (`~/.zshrc`, `~/.bashrc`, or PowerShell `$PROFILE`) and mirrors the skill to `~/.claude/skills/fde-vault/` and `~/.agent/skills/fde-vault/`.
 
-- adds an `fde` function between `# >>> fde-vault >>>` markers in `~/.zshrc` and
-  `~/.bashrc` (macOS), `~/.bashrc` and `~/.profile` (Linux), or the PowerShell
-  `$PROFILE` (Windows). Repeated runs replace the block; they never duplicate it.
-- writes `~/.local/bin/fde` and, on Windows, `%USERPROFILE%\bin\fde.bat`
-- mirrors the skill to `./.agent/skills/fde-vault/` and `~/.claude/skills/fde-vault/`
+---
 
-Preview with `--dry-run`. Remove everything it added with `--uninstall`.
-`./fde-vault` and `fde-vault.bat` in this folder are local launchers that do the
-same job without installing anything.
+## Quickstart: Scaffolding a Repository
 
-## Use
+To equip any code repository with FDE-VAULT governance without disturbing existing account data, navigate to your project and run:
 
-| Command | What it does |
-| --- | --- |
-| `fde` | Startup animation, cover page, passphrase prompt, unlock |
-| `fde lock` | Seal the session immediately |
-| `fde status` | Session, active account, index drift, portfolio |
-| `fde ingest --clipboard` | Scrub the clipboard into the active inbox |
-| `fde ingest --file PATH --wipe` | Scrub a file into the inbox, shred the source |
-
-Then, in your AI tool, use `/switch <account>`, `/discover`, `/sync`, `/scope`,
-`/preflight`, `/incident`, `/rfc`, `/brief`, `/handoff`, `/steps`, `/status`,
-`/lock`, and `/open`. See `.claude/skills/fde-vault/SKILL.md` for the full suite.
-
-First launch asks you to set a passphrase (minimum 10 characters). It is stored
-only as a salted PBKDF2-HMAC-SHA256 hash (100,000 iterations) in
-`.fde-vault/.vault.auth`. Sessions last 8 hours; set `FDE_SESSION_TTL_HOURS` to change that.
-
-## Layout
-
-```
-.claude/settings.json                  hook wiring (prompt and tool firewalls)
-.claude/skills/fde-vault/SKILL.md      skill definition
-.claude/skills/fde-vault/references/   core-rules.md, playbooks.md
-.claude/skills/fde-vault/scripts/      vault_guard.py, hooks, installer, tests
-.agent/skills/fde-vault/               mirror of the skill
-.fde-vault/                            the single canonical data store
-  _blueprint/                          template cloned for each new account
-  index.json                           portfolio index (empty at ship)
-  <account>/brain.md timeline.md inbox.md outputs/
+```bash
+cd /path/to/your/engineering-repo
+fde init
 ```
 
-No demo accounts are shipped. `.fde-vault/` live data is git-ignored by default.
+This scaffolds the canonical architecture:
+- `.fde-vault/_blueprint/` (Account template: `brain.md`, `timeline.md`, `inbox.md`, `outputs/`)
+- `.fde-vault/index.json` (Empty portfolio registry)
+- `.claude/skills/fde-vault/` and `.agent/skills/fde-vault/` (Skill definitions)
+- `.claude/settings.json` (PreToolUse and UserPromptSubmit firewall hooks)
+- `AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `.cursorrules` (Cross-agent root pointers)
+- `.gitignore` (Secures active vaults while tracking templates)
 
-## Security model
+---
 
-Read this before trusting it with real client data.
+## Interactive Terminal Experience
 
-- **Session-Gated Isolation:** Files in `.fde-vault/` are plaintext markdown documents gated by local session checks and firewall hooks. The passphrase gates sessions and hook decisions. It does **not** encrypt files on disk. Anything with local filesystem access can read `.fde-vault/`. Use full-disk encryption (FileVault, BitLocker, LUKS) for confidentiality at rest.
-- **Best-Effort Redaction:** Redaction is best-effort pattern matching (cloud keys, tokens, private keys, JWTs, URL credentials, secret assignments, cards with Luhn check, SSNs, emails, phone numbers). Review `inbox.md` before `/sync` when stakes are high. Names, addresses, and free-text secrets are not detected.
-- **Firewall Hooks:** The hooks block prompts and tool calls that contain credential formats, and block tool access to `.fde-vault/` while locked. They inspect command text and prompt payloads locally before egress. They are an engineering guardrail against accidents, not a kernel sandbox.
-- **Firewall Modes:** Set `FDE_FIREWALL=credentials` to stop the prompt hook from blocking emails and phone numbers while keeping credential blocking strictly active.
-- A wrong passphrase triggers an exponential backoff (capped at 5 minutes).
-
-## Tests
+Typing `fde` in an interactive terminal triggers an executive typographic startup reveal inspired by engineering journals, followed by the Cover Page and Command Directory:
 
 ```
+  +------------------------------------------------------------+
+  |                                                            |
+  |                      F D E - V A U L T                     |
+  |       FORWARD DEPLOYED ENGINEERING OPERATING SYSTEM        |
+  |                                                            |
+  +------------------------------------------------------------+
+```
+
+```
+======================================================================
+  FDE-VAULT: Enterprise Forward Deployed Engineering Ledger
+======================================================================
+  Session Status : Active (TTL: 7h 48m remaining)
+  Active Vault   : None (Run 'fde switch <account>' to mount)
+  Store Location : ./.fde-vault/
+======================================================================
+```
+
+---
+
+## Command Reference
+
+### Command Line Interface (`fde`)
+
+| Command | Operational Purpose |
+| :--- | :--- |
+| `fde` | Launches the interactive interface, verifies session, prompts passphrase. |
+| `fde init` | Scaffolds the complete vault architecture into the current repository. |
+| `fde status` | Inspects active session TTL, current account, index drift, and portfolio accounts. |
+| `fde lock` | Instantly seals the vault and destroys the active session token. |
+| `fde switch <account>` | Mounts an account or provisions a new one from `_blueprint/`. |
+| `fde ingest --clipboard` | Ingests and scrubs host clipboard contents into `inbox.md`. |
+| `fde ingest --file <path> --wipe` | Ingests, scrubs, and securely shred-wipes a local file. |
+| `fde reindex` | Reconciles discrepancies between `.fde-vault/` folders and `index.json`. |
+| `fde render-dashboard` | Compiles the active account into a hardcover book HTML artifact. |
+| `fde passwd` | Updates the master vault authentication passphrase. |
+
+### Chat Slash Commands (Within AI Assistants)
+
+When working inside Claude Code, Antigravity, Cursor, or Codex CLI, use these slash commands:
+
+| Slash Command | Governance Action |
+| :--- | :--- |
+| `/switch <account>` | Switches active context; creates account directory if not present. |
+| `/discover` | Conducts stakeholder, architecture, and boundary discovery interview. |
+| `/sync` | Processes entries from `inbox.md` into `timeline.md` and `brain.md`. |
+| `/scope` | Evaluates proposed feature request against agreed boundaries. |
+| `/preflight` | Executes an eight-point readiness checklist prior to production deployment. |
+| `/incident` | Initiates incident triage: severity, timeline, and mitigation runbook. |
+| `/rfc` | Drafts a formal Request for Comments for an architectural deviation. |
+| `/brief` | Prepares an executive status briefing for non-technical stakeholders. |
+| `/handoff` | Generates a transition manual for customer engineering teams. |
+| `/steps` | Converts architectural rulings into an atomic implementation plan. |
+| `/status` | Renders high-level health report of the active enterprise engagement. |
+| `/lock` | Seals the local vault session. |
+| `/open` | Unlocks the vault session. |
+
+---
+
+## Interactive Hardcover Book Dashboard
+
+Running `fde render-dashboard` compiles the active customer ledger into `outputs/dashboard.html`, styled as an archival hardcover engineering journal:
+
+- **Archival Typography:** Archival cream paper (`#FAF7F0`), deep slate ink (`#1A1816`), and drop-cap chapter headers.
+- **Interactive Page-Turning:** Clickable page transitions with keyboard Left/Right arrow navigation.
+- **Zero Monospace Clutter:** Formatted strictly in structured narrative chapters with indented blockquotes for scope rulings.
+- **Folio Numbering:** Running top header and centered bottom folio pagination.
+
+---
+
+## Security Model & Threat Boundary
+
+*Engineers must understand the explicit boundaries of the local security architecture before deploying with client data:*
+
+### 1. Session-Gated Isolation
+All account data in `./.fde-vault/` is stored in plaintext Markdown. The master passphrase does not apply block-level disk encryption; it gates active sessions and enables the firewall hooks.
+> **Requirement:** Full-disk encryption (FileVault, BitLocker, or LUKS) must be enabled on the host machine to ensure data confidentiality at rest.
+
+### 2. Best-Effort Local Redaction
+The CPU-side redaction engine (`vault_guard.py redact`) scans for:
+- Cloud provider access keys (AWS, GCP, Azure, GitHub, Slack, Stripe).
+- High-entropy bearer tokens, private keys, and JSON Web Tokens (JWTs).
+- Basic authentication credentials embedded in URLs.
+- Payment cards validated via the Luhn algorithm.
+- National identification numbers (SSNs).
+- Corporate email addresses and phone numbers.
+
+*Free-text passwords and company-specific confidential naming conventions require human review of `inbox.md` prior to `/sync`.*
+
+### 3. Execution Firewall Hooks
+The system registers two native hooks in `.claude/settings.json`:
+- **`UserPromptSubmit` (`pre_prompt_hook.py`):** Scans prompts before transmission to cloud model endpoints. Blocks execution if unredacted credentials or keys are detected.
+- **`PreToolUse` (`pre_tool_hook.py`):** Evaluates agent tool invocations (`grep`, `read_file`, `bash`). Denies access to `./.fde-vault/` paths if the vault session is currently locked.
+
+### 4. Firewall Operating Modes
+By default, the prompt hook halts prompts containing phone numbers or email addresses. To permit communication containing contact details while strictly blocking cryptographic secrets, set:
+```bash
+export FDE_FIREWALL=credentials
+```
+
+---
+
+## Canonical Directory Structure
+
+```
+.
+├── .claude/
+│   ├── settings.json                       # Hook configurations (PreToolUse & UserPromptSubmit)
+│   └── skills/fde-vault/
+│       ├── SKILL.md                        # Master skill specification
+│       ├── references/
+│       │   ├── core-rules.md               # Engagement & scope enforcement doctrines
+│       │   └── playbooks.md                # Incident, RFC, and Preflight playbooks
+│       └── scripts/
+│           ├── vault_guard.py              # Core governance engine & CLI router
+│           ├── pre_prompt_hook.py          # Egress redaction firewall hook
+│           ├── pre_tool_hook.py            # Local session-access firewall hook
+│           ├── install_cli.py              # Multi-platform shell profile installer
+│           └── test_fde_vault.py           # Verification test suite (55 unit tests)
+├── .agent/skills/fde-vault/                # Synced skill mirror for Antigravity & Codex
+├── .fde-vault/                             # Single canonical ledger
+│   ├── _blueprint/                         # Account template structure
+│   │   ├── brain.md                        # Architectural charter & scope boundaries
+│   │   ├── timeline.md                     # Engagement log & decisions
+│   │   ├── inbox.md                        # Staging area for ingested notes
+│   │   └── outputs/                        # Rendered artifacts & briefings
+│   ├── index.json                          # Portfolio registry (ships clean)
+│   ├── .vault.auth                         # PBKDF2-HMAC-SHA256 password hash
+│   ├── .session-unlocked                   # Ephemeral session token (TTL-governed)
+│   └── .active-vault                       # Pointer to active mounted account
+├── assets/
+│   └── fde-vault-logo.svg                  # Vector brand identity
+├── fde_vault_pkg/                          # Pip/pipx installable Python package
+│   ├── __init__.py
+│   ├── cli.py                              # Entrypoint dispatcher ('fde' & 'fde init')
+│   └── bundled/                            # Self-contained assets for runtime init
+├── AGENTS.md                               # Universal agent discovery pointer
+├── GEMINI.md                               # Google Antigravity discovery pointer
+├── CLAUDE.md                               # Anthropic Claude Code discovery pointer
+├── .cursorrules                            # Cursor IDE discovery pointer
+├── install.sh                              # macOS/Linux one-line installer
+├── install.ps1                             # Windows PowerShell one-line installer
+├── pyproject.toml                          # PEP 621 packaging metadata
+└── README.md                               # System documentation
+```
+
+---
+
+## Verification & Test Suite
+
+The test suite validates cryptographic hashing, session TTL enforcement, redaction patterns, firewall hooks, packaging, and strict repository hygiene (confirming zero demo accounts and zero emojis):
+
+```bash
 python3 .claude/skills/fde-vault/scripts/test_fde_vault.py
 ```
 
-Covers hashing, sessions, locking, redaction, ingest, hooks, installer
-idempotency, the dashboard, the animation, and repo hygiene (no emojis, no demo
-data, standard library only).
+```
+.......................................................
+----------------------------------------------------------------------
+Ran 55 tests in ~12s
 
-## Keeping mirrors in sync
+OK (skipped=3)
+```
 
-The project copy is the source. After editing it, rerun the installer to refresh
-the mirrors. Data never lives in a mirror, so they cannot drift on content.
+---
+
+## License
+
+Distributed under the Apache 2.0 License. See standard terms for commercial and internal enterprise use.

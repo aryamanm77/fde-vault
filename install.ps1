@@ -1,5 +1,5 @@
 # FDE-VAULT Global One-Line GitHub Installer for Windows PowerShell.
-# Usage: irm https://raw.githubusercontent.com/fde-vault/fde-vault/main/install.ps1 | iex
+# Usage: irm https://raw.githubusercontent.com/aryamanm77/fde-vault/main/install.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 
@@ -13,7 +13,7 @@ if (-not $RepoUrl) {
     } catch {}
 }
 if (-not $RepoUrl) {
-    $RepoUrl = "https://github.com/fde-vault/fde-vault.git"
+    $RepoUrl = "https://github.com/aryamanm77/fde-vault.git"
 }
 
 Write-Host "[FDE-VAULT] Installing from $RepoUrl into $AppDir..."

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # FDE-VAULT Global One-Line GitHub Installer for macOS and Linux.
-# Usage: curl -fsSL https://raw.githubusercontent.com/fde-vault/fde-vault/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/aryamanm77/fde-vault/main/install.sh | bash
 
 set -euo pipefail
 
@@ -13,7 +13,7 @@ if [ -z "$REPO_URL" ]; then
     fi
 fi
 if [ -z "$REPO_URL" ]; then
-    REPO_URL="https://github.com/fde-vault/fde-vault.git"
+    REPO_URL="https://github.com/aryamanm77/fde-vault.git"
 fi
 
 echo "[FDE-VAULT] Installing from $REPO_URL into $APP_DIR..."

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141312"/>
+      <stop offset="50%" stop-color="#1B1917"/>
+      <stop offset="100%" stop-color="#11100F"/>
+    </linearGradient>
+
+    <!-- Amber Metallic Gradient -->
+    <linearGradient id="amber-metal" x1="0%" y1="0%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#FCEFD2"/>
+      <stop offset="25%" stop-color="#E5AB56"/>
+      <stop offset="60%" stop-color="#C57F24"/>
+      <stop offset="90%" stop-color="#8B520E"/>
+      <stop offset="100%" stop-color="#DCA048"/>
+    </linearGradient>
+
+    <!-- Bronze Border Gradient -->
+    <linearGradient id="bronze-border" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A3F33"/>
+      <stop offset="30%" stop-color="#8A6E4B"/>
+      <stop offset="50%" stop-color="#D4AA6D"/>
+      <stop offset="70%" stop-color="#8A6E4B"/>
+      <stop offset="100%" stop-color="#4A3F33"/>
+    </linearGradient>
+
+    <!-- Vault Ring Glow -->
+    <radialGradient id="hub-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E5AB56" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#C57F24" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#141312" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Container Box -->
+  <rect x="10" y="10" width="860" height="260" rx="16" fill="url(#bg-grad)" stroke="url(#bronze-border)" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="18" y="18" width="844" height="244" rx="10" fill="none" stroke="#2D2720" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Corner Brackets (Architectural Grid Motif) -->
+  <path d="M 28 42 L 28 28 L 42 28" fill="none" stroke="#8A6E4B" stroke-width="1.5"/>
+  <path d="M 852 42 L 852 28 L 838 28" fill="none" stroke="#8A6E4B" stroke-width="1.5"/>
+  <path d="M 28 238 L 28 252 L 42 252" fill="none" stroke="#8A6E4B" stroke-width="1.5"/>
+  <path d="M 852 238 L 852 252 L 838 252" fill="none" stroke="#8A6E4B" stroke-width="1.5"/>
+
+  <!-- LEFT EMBLEM: Precision Vault Mechanism -->
+  <g transform="translate(142, 140)">
+    <!-- Radial Back Glow -->
+    <circle cx="0" cy="0" r="86" fill="url(#hub-glow)"/>
+
+    <!-- Outer Gear/Lock Ring -->
+    <circle cx="0" cy="0" r="76" fill="none" stroke="#383127" stroke-width="2"/>
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#5E4F3B" stroke-width="1" stroke-dasharray="2,6"/>
+
+    <!-- Perimeter Vault Tumbler Bolts (12 Teeth) -->
+    <g stroke="url(#amber-metal)" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-74" x2="0" y2="-64"/>
+      <line x1="37" y1="-64" x2="32" y2="-55"/>
+      <line x1="64" y1="-37" x2="55" y2="-32"/>
+      <line x1="74" y1="0" x2="64" y2="0"/>
+      <line x1="64" y1="37" x2="55" y2="32"/>
+      <line x1="37" y1="64" x2="32" y2="55"/>
+      <line x1="0" y1="74" x2="0" y2="64"/>
+      <line x1="-37" y1="64" x2="-32" y2="55"/>
+      <line x1="-64" y1="37" x2="-55" y2="32"/>
+      <line x1="-74" y1="0" x2="-64" y2="0"/>
+      <line x1="-64" y1="-37" x2="-55" y2="-32"/>
+      <line x1="-37" y1="-64" x2="-32" y2="-55"/>
+    </g>
+
+    <!-- Secondary Dial Ring -->
+    <circle cx="0" cy="0" r="52" fill="#171513" stroke="url(#bronze-border)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="44" fill="none" stroke="#42392D" stroke-width="1" stroke-dasharray="4,4"/>
+
+    <!-- 4 Diagonal Vault Spokes -->
+    <g stroke="url(#amber-metal)" stroke-width="2">
+      <line x1="-34" y1="-34" x2="34" y2="34"/>
+      <line x1="-34" y1="34" x2="34" y2="-34"/>
+      <line x1="0" y1="-44" x2="0" y2="44"/>
+      <line x1="-44" y1="0" x2="44" y2="0"/>
+    </g>
+
+    <!-- Center Vault Hub -->
+    <circle cx="0" cy="0" r="24" fill="#221E19" stroke="url(#amber-metal)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="14" fill="#141312" stroke="#5E4F3B" stroke-width="1.5"/>
+    
+    <!-- Central Key Aperture Geometric Cross -->
+    <polygon points="0,-7 5,0 0,7 -5,0" fill="url(#amber-metal)"/>
+    <circle cx="0" cy="0" r="2.5" fill="#FAF7F0"/>
+  </g>
+
+  <!-- VERTICAL SEPARATOR -->
+  <line x1="262" y1="44" x2="262" y2="236" stroke="#2E2820" stroke-width="1.5"/>
+  <line x1="262" y1="90" x2="262" y2="190" stroke="url(#bronze-border)" stroke-width="1.5"/>
+
+  <!-- RIGHT CONTENT: Wordmark and System Hierarchy -->
+  <g transform="translate(300, 0)">
+    <!-- Top Metadata / Classification Pill -->
+    <g transform="translate(0, 58)">
+      <rect x="0" y="0" width="220" height="20" rx="4" fill="#24201A" stroke="#473C2C" stroke-width="1"/>
+      <text x="110" y="14" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'SF Pro Display', sans-serif" font-size="9.5" font-weight="700" letter-spacing="0.18em" fill="#D4AA6D" text-anchor="middle">ENTERPRISE HARDENED</text>
+      
+      <circle cx="236" cy="10" r="2" fill="#5E4F3B"/>
+      <text x="250" y="14" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600" letter-spacing="0.14em" fill="#8A7B66">SESSION-GATED LEDGER</text>
+    </g>
+
+    <!-- Main Title Wordmark: FDE-VAULT -->
+    <text x="0" y="132" font-family="'Cinzel', 'Trajan Pro', 'Georgia', 'SF Pro Display', serif" font-size="52" font-weight="700" letter-spacing="0.22em" fill="#FAF7F0">
+      FDE<tspan fill="#C57F24">-</tspan>VAULT
+    </text>
+
+    <!-- Subtitle Definition -->
+    <text x="2" y="168" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'SF Pro Text', sans-serif" font-size="12.5" font-weight="600" letter-spacing="0.24em" fill="#D4AA6D">
+      FORWARD DEPLOYED ENGINEERING OPERATING SYSTEM
+    </text>
+
+    <!-- Architectural Rule with Diamond Point -->
+    <g transform="translate(2, 192)">
+      <line x1="0" y1="0" x2="230" y2="0" stroke="#3D352A" stroke-width="1"/>
+      <polygon points="238,-3 241,0 238,3 235,0" fill="#C57F24"/>
+      <line x1="246" y1="0" x2="490" y2="0" stroke="#3D352A" stroke-width="1"/>
+    </g>
+
+    <!-- Feature Pillars Footnote -->
+    <g transform="translate(2, 222)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="500" letter-spacing="0.12em" fill="#998873">
+      <text x="0" y="0">ACCOUNT ISOLATION</text>
+      <circle cx="152" cy="-3.5" r="1.5" fill="#5E4F3B"/>
+      <text x="166" y="0">LOCAL CPU REDACTION</text>
+      <circle cx="330" cy="-3.5" r="1.5" fill="#5E4F3B"/>
+      <text x="344" y="0">CROSS-AGENT RUNTIME</text>
+    </g>
+  </g>
+</svg>

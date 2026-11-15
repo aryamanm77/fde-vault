@@ -29,8 +29,8 @@ dependencies = []
 fde = "fde_vault_pkg.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/fde-vault/fde-vault"
-Repository = "https://github.com/fde-vault/fde-vault.git"
+Homepage = "https://github.com/aryamanm77/fde-vault"
+Repository = "https://github.com/aryamanm77/fde-vault.git"
 
 [tool.setuptools.packages.find]
 where = ["."]
