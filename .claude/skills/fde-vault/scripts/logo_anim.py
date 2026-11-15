@@ -94,11 +94,7 @@ def _span(t, window):
 def _color_mode():
     if os.environ.get("NO_COLOR") or os.environ.get("TERM") == "dumb":
         return "none"
-    if os.environ.get("COLORTERM", "").lower() in ("truecolor", "24bit"):
-        return "truecolor"
-    if os.environ.get("TERM_PROGRAM") in ("iTerm.app", "vscode", "WezTerm", "ghostty"):
-        return "truecolor"
-    return "256"
+    return "truecolor"
 
 
 def _to256(c):

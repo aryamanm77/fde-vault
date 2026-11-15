@@ -649,7 +649,7 @@ def stdin_has_data():
 def cmd_open(args):
     ensure_layout()
     tty = sys.stdout.isatty()
-    color = not os.environ.get("NO_COLOR") and (tty or bool(os.environ.get("COLORTERM")))
+    color = not bool(os.environ.get("NO_COLOR"))
     play_animation(color)
     print(cover_text(color))
     info = session_info()
