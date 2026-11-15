@@ -68,10 +68,15 @@ function fde {
     if (Test-Path $c) { $g = $c }
   }
   if (-not $g) { Write-Error 'fde: vault_guard.py not found in this project or in ~/.claude/skills/fde-vault'; return }
-  $a = if ($args.Count -eq 0) { @('open') } else { $args }
-  if (Get-Command py -ErrorAction SilentlyContinue) { & py -3 $g @a }
-  elseif (Get-Command python3 -ErrorAction SilentlyContinue) { & python3 $g @a }
-  else { & python $g @a }
+  if ($args.Count -eq 0) {
+    if (Get-Command py -ErrorAction SilentlyContinue) { & py -3 $g @('open') }
+    elseif (Get-Command python3 -ErrorAction SilentlyContinue) { & python3 $g @('open') }
+    else { & python $g @('open') }
+  } else {
+    if (Get-Command py -ErrorAction SilentlyContinue) { & py -3 $g @args }
+    elseif (Get-Command python3 -ErrorAction SilentlyContinue) { & python3 $g @args }
+    else { & python $g @args }
+  }
 }
 ''' + MARKER_END + "\n"
 

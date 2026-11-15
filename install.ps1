@@ -58,6 +58,54 @@ if (Get-Command py -ErrorAction SilentlyContinue) {
     python $installerScript
 }
 
+# Ensure %USERPROFILE%\bin is populated and present in PATH
+$userBin = Join-Path $env:USERPROFILE "bin"
+if (-not (Test-Path $userBin)) { New-Item -ItemType Directory -Path $userBin -Force | Out-Null }
+$fdeBat = Join-Path $AppDir "fde-vault.bat"
+if (Test-Path $fdeBat) {
+    Copy-Item $fdeBat (Join-Path $userBin "fde.bat") -Force
+    Copy-Item $fdeBat (Join-Path $userBin "fde.cmd") -Force
+}
+
+$regPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($regPath -notlike "*$userBin*") {
+    [Environment]::SetEnvironmentVariable("Path", "$userBin;$regPath", "User")
+}
+if ($env:PATH -notlike "*$userBin*") {
+    $env:PATH = "$userBin;$env:PATH"
+}
+
+# Define fde function immediately in current PowerShell session
+function global:fde {
+    $g = $null
+    $d = (Get-Location).Path
+    while ($d) {
+        $c = Join-Path $d '.claude\skills\fde-vault\scripts\vault_guard.py'
+        if (Test-Path $c) { $g = $c; break }
+        $p = Split-Path $d -Parent
+        if (-not $p -or $p -eq $d) { break }
+        $d = $p
+    }
+    if (-not $g) {
+        $c = Join-Path $HOME '.claude\skills\fde-vault\scripts\vault_guard.py'
+        if (Test-Path $c) { $g = $c }
+    }
+    if (-not $g) {
+        $c = Join-Path $env:USERPROFILE '.fde-vault-app\.claude\skills\fde-vault\scripts\vault_guard.py'
+        if (Test-Path $c) { $g = $c }
+    }
+    if (-not $g) { Write-Error 'fde: vault_guard.py not found'; return }
+    if (-not $args -or $args.Count -eq 0) {
+        if (Get-Command py -ErrorAction SilentlyContinue) { & py -3 $g open }
+        elseif (Get-Command python3 -ErrorAction SilentlyContinue) { & python3 $g open }
+        else { & python $g open }
+    } else {
+        if (Get-Command py -ErrorAction SilentlyContinue) { & py -3 $g @args }
+        elseif (Get-Command python3 -ErrorAction SilentlyContinue) { & python3 $g @args }
+        else { & python $g @args }
+    }
+}
+
 Write-Host "[FDE-VAULT] Installation complete."
 Write-Host "  Run 'fde' to launch the executive ledger."
 Write-Host "  Run 'fde init' inside any repository to scaffold governance assets."

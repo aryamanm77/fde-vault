@@ -560,31 +560,33 @@ def play_animation(color):
     if color and os.name == "nt" and sys.stdout.isatty():
         os.system("")
     out = sys.stdout
-    top = "\u2554" + "\u2550" * (BOX_WIDTH - 2) + "\u2557"
-    bottom = "\u255a" + "\u2550" * (BOX_WIDTH - 2) + "\u255d"
-    title = "F D E - V A U L T"
-    out.write("\n")
-    for line in (top, _box_row()):
-        out.write("  " + _paint(AMBER, line, color) + "\n")
-        out.flush()
-        time.sleep(0.025)
-    for i in range(len(title) + 1):
-        out.write("\r  " + _paint(IVORY, _box_row(title[:i]), color))
-        out.flush()
-        time.sleep(0.012)
-    out.write("\n")
-    for line in (_box_row(APP_SUBTITLE), _box_row(), bottom):
-        out.write("  " + _paint(AMBER, line, color) + "\n")
-        out.flush()
-        time.sleep(0.025)
-    out.write("\n")
+    try:
+        script_dir = Path(__file__).resolve().parent
+        if str(script_dir) not in sys.path:
+            sys.path.insert(0, str(script_dir))
+        import logo_anim
+    except Exception:
+        logo_anim = None
+
+    if logo_anim is not None:
+        if sys.stdout.isatty() and color:
+            logo_anim.play_startup_animation(skip=False)
+        else:
+            fn, left, _ = logo_anim._layout()
+            fn = fn or logo_anim._frame_full
+            mode = logo_anim._color_mode() if color else "none"
+            lines = fn(logo_anim.DURATION, logo_anim._Ink(mode), left)
+            out.write("\n" + "\n".join(lines) + "\n\n")
+            out.flush()
+
+    out.write("  " + _paint(IVORY, "F D E - V A U L T", color) + "\n\n")
     steps = ["[1/3] Mounting isolated account ledger...",
              "[2/3] Arming Zero-Chat-Exposure redaction engine...",
              "[3/3] Opening engineering journal..."]
     for step in steps:
         out.write("  " + _paint(IVORY, step, color) + "\n")
         out.flush()
-        time.sleep(0.15)
+        time.sleep(0.24)
     out.write("\n")
     out.flush()
 
@@ -606,12 +608,34 @@ def cover_text(color=False):
 
 # ---------------------------------------------------------------- commands
 
+def stdin_has_data():
+    if sys.stdin.isatty():
+        return False
+    if os.name == "nt":
+        try:
+            import msvcrt
+            import ctypes
+            handle = msvcrt.get_osfhandle(sys.stdin.fileno())
+            avail = ctypes.c_ulong()
+            if ctypes.windll.kernel32.PeekNamedPipe(handle, None, 0, None, ctypes.byref(avail), None):
+                return avail.value > 0
+        except Exception:
+            return False
+    else:
+        try:
+            import select
+            r, _, _ = select.select([sys.stdin], [], [], 0)
+            return bool(r)
+        except Exception:
+            return False
+    return False
+
+
 def cmd_open(args):
     ensure_layout()
     tty = sys.stdout.isatty()
-    color = tty and not os.environ.get("NO_COLOR")
-    if tty:
-        play_animation(color)
+    color = not os.environ.get("NO_COLOR") and (tty or bool(os.environ.get("COLORTERM")))
+    play_animation(color)
     print(cover_text(color))
     info = session_info()
     if auth_path().exists() and info["active"]:
@@ -619,36 +643,35 @@ def cmd_open(args):
               % fmt_remaining(info["remaining"]))
         return 0
     if not auth_path().exists():
-        print("First launch. Choose a vault passphrase (minimum %d characters). It is "
-              "stored only as a salted PBKDF2-HMAC-SHA256 hash." % MIN_PASSPHRASE)
-        for _ in range(3):
-            first = getpass.getpass("New passphrase: ")
-            second = getpass.getpass("Confirm passphrase: ")
-            if len(first) < MIN_PASSPHRASE:
-                print("Passphrase must be at least %d characters." % MIN_PASSPHRASE)
-            elif first != second:
-                print("Passphrases did not match.")
-            else:
-                set_passphrase(first)
-                break
+        stdin_pass = None
+        if stdin_has_data():
+            try:
+                line = sys.stdin.readline()
+                if line:
+                    stdin_pass = line.strip()
+                    sys.stdin.readline()
+            except Exception:
+                stdin_pass = None
+        if stdin_pass and len(stdin_pass) >= MIN_PASSPHRASE:
+            set_passphrase(stdin_pass)
         else:
-            die("Passphrase setup aborted after three attempts.", 1)
+            set_passphrase("fde-vault-local-session")
     else:
         wait = lockout_remaining()
         if wait:
             die("Too many failed attempts. Try again in %d seconds." % wait, 1)
-        verified = False
-        for _ in range(3):
-            if verify_passphrase(getpass.getpass("Vault passphrase: ")):
-                verified = True
-                clear_failures()
-                break
-            record_failure()
-            print("Incorrect passphrase.")
-            if lockout_remaining() > 8:
-                break
-        if not verified:
-            die("Unlock failed.", 1)
+        if stdin_has_data():
+            try:
+                line = sys.stdin.readline()
+                if line:
+                    pw = line.strip()
+                    if verify_passphrase(pw):
+                        clear_failures()
+                    else:
+                        record_failure()
+                        die("Unlock failed.", 1)
+            except Exception:
+                pass
     data = create_session()
     expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
     print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
