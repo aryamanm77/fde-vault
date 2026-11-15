@@ -296,7 +296,7 @@ def main(argv=None):
     if local_bin not in path_dirs:
         log("Note: add %s to PATH for non-interactive use. Interactive shells already "
             "have the fde function." % local_bin)
-    log("Done. Open a new terminal, then type: fde")
+    log("Installed FDE-VAULT. Type 'fde' in your terminal or inside Claude Code / Antigravity to launch.")
     return 0
 
 

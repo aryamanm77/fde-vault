@@ -684,6 +684,34 @@ class PackagingAndInitTests(unittest.TestCase):
         self.assertTrue(guard.is_file())
         self.assertEqual(guard.name, "vault_guard.py")
 
+    def test_install_confirmation_banner(self):
+        banner = "Installed FDE-VAULT. Type 'fde' in your terminal or inside Claude Code / Antigravity to launch."
+        for fn in ("install.sh", "install.ps1", ".claude/skills/fde-vault/scripts/install_cli.py", "fde_vault_pkg/cli.py"):
+            text = (self.ROOT / fn).read_text(encoding="utf-8")
+            self.assertIn(banner, text, "Confirmation banner missing in %s" % fn)
+
+    def test_home_screen_one_line_command_directory(self):
+        cover = vg.cover_text(False)
+        self.assertIn("FDE-VAULT", cover)
+        self.assertIn("Session Status :", cover)
+        self.assertIn("Active Account :", cover)
+        self.assertIn("Store Location :", cover)
+        commands = [
+            "/open", "/lock", "/status", "/switch", "/discover", "/sync",
+            "/scope", "/preflight", "/incident", "/rfc", "/brief", "/handoff", "/steps"
+        ]
+        for cmd in commands:
+            self.assertIn(cmd, cover)
+
+    def test_fde_chat_trigger_documented_in_skill_and_pointers(self):
+        skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("AI Chat Entry Triggers (`fde`, `/open`, `/fde`)", skill)
+        self.assertIn("## F D E · V A U L T", skill)
+        for pointer in ("AGENTS.md", "GEMINI.md", "CLAUDE.md", ".cursorrules"):
+            text = (self.ROOT / pointer).read_text(encoding="utf-8")
+            self.assertIn("fde", text)
+            self.assertIn("/open", text)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=1)

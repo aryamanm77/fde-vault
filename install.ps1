@@ -107,5 +107,4 @@ function global:fde {
 }
 
 Write-Host "[FDE-VAULT] Installation complete."
-Write-Host "  Run 'fde' to launch the executive ledger."
-Write-Host "  Run 'fde init' inside any repository to scaffold governance assets."
+Write-Host "Installed FDE-VAULT. Type 'fde' in your terminal or inside Claude Code / Antigravity to launch."

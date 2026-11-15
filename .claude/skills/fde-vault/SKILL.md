@@ -1,6 +1,6 @@
 ---
 name: fde-vault
-description: Enterprise Forward Deployed Engineer (FDE) application and command center. Enforces passphrase-locked vault sessions, session-gated account isolation, best-effort local secret/PII redaction, pre-implementation architecture guardrails, scope governance, incident triage, upstream RFC drafting, atomic multi-account indexing, and printed-book engineering diary artifacts.
+description: Enterprise Forward Deployed Engineer (FDE) application and command center. Triggered by 'fde', '/open', '/fde', or vault requests. Enforces passphrase-locked vault sessions, session-gated account isolation, best-effort local secret/PII redaction, pre-implementation architecture guardrails, scope governance, incident triage, upstream RFC drafting, atomic multi-account indexing, and printed-book engineering diary artifacts.
 ---
 
 # FDE-VAULT
@@ -18,6 +18,60 @@ python3 .claude/skills/fde-vault/scripts/vault_guard.py
 
 Fall back to `python` or `py -3` when `python3` is unavailable, and to
 `~/.claude/skills/fde-vault/scripts/vault_guard.py` when the project copy is absent.
+
+## AI Chat Entry Triggers (`fde`, `/open`, `/fde`)
+
+Activate and render the **FDE-VAULT Home Screen** whenever the user inputs:
+- `fde` (case-insensitive standalone message)
+- `/open`
+- `/fde`
+- Or explicitly asks to launch, open, or view the vault directory.
+
+### Exact Procedure for AI Assistants (Antigravity & Claude Code):
+1. **Check Live State First:**
+   Execute:
+   ```bash
+   python3 .claude/skills/fde-vault/scripts/vault_guard.py status
+   ```
+   *(falling back to `py -3` or `python` on Windows).*
+2. **Render the Identical Home Screen in Chat:**
+   Start with the minimalist typographic logo header:
+   ```markdown
+   ## F D E · V A U L T
+   ```
+   Followed by the live session/account status blockquote:
+   - If unlocked:
+     `> **STATUS: UNLOCKED** — Active Account: \`<account>\` (Session active)`
+   - If locked or uninitialised:
+     `> **STATUS: LOCKED** — Run 'fde' in your terminal (or '!fde' in Claude Code) to unlock.`
+   
+   Followed by the exact 1-line-per-command Home Screen directory table:
+
+| Command | Operational Purpose |
+| :--- | :--- |
+| `/open` | Cover page, live status, and full command directory |
+| `/lock` | Seal the vault session immediately |
+| `/status` | Verify index drift and show portfolio accounts |
+| `/switch <account>` | Create or mount an account ledger |
+| `/discover` | Day-1 technical discovery interview and charter |
+| `/sync [notes]` | Ingest and process scrubbed notes into ledger |
+| `/scope "<request>"` | Evaluate a proposed request against scope boundaries |
+| `/preflight "<proposal>"` | Check an architectural proposal against core rules |
+| `/incident "<issue>"` | Log a live production issue and mitigation runbook |
+| `/rfc "<title>"` | Draft a formal upstream engineering RFC |
+| `/brief` | One-page executive status brief for leadership |
+| `/handoff` | Transition runbook, core pitch, and hardcover book |
+| `/steps` | Engagement table of contents and milestone roadmap |
+
+| Terminal Command | Operational Purpose |
+| :--- | :--- |
+| `fde` (or `fde open`) | Unlock vault with passphrase and display Home Screen |
+| `fde lock` | Seal the vault session immediately |
+| `fde ingest --clipboard` | Scrub host clipboard directly into active inbox |
+| `fde ingest --file <path> --wipe` | Scrub local file into inbox, then shred source |
+| `fde render-dashboard` | Compile active engagement into interactive hardcover book |
+
+   **Security Protocol:** Never ask the user to type their passphrase into AI chat. If locked, display the single terminal unlock instruction. If unlocked, show the running next step footer.
 
 ## Core Operating Rules
 

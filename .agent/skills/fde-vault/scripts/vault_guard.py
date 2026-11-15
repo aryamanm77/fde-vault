@@ -592,21 +592,58 @@ def play_animation(color):
 
 
 def cover_text(color=False):
+    info = session_info()
     rule = "\u2550" * 74
+    sub_rule = "\u2500" * 74
+    state_str = "UNLOCKED (%s remaining)" % fmt_remaining(info["remaining"]) if info["active"] else "LOCKED"
+    acct = active_account(required=False) or "none"
     lines = [_paint(AMBER, rule, color),
-             _paint(IVORY, "%s \u2014 %s" % (APP_TITLE, APP_SUBTITLE), color),
-             _paint(DIM, "Version %s  |  Vault: %s" % (VERSION, vault_dir()), color),
-             _paint(AMBER, rule, color), "", "Terminal Commands"]
-    for cmd, use in TERMINAL_COMMANDS:
-        lines.append("  %-34s%s" % (cmd, use))
-    lines += ["", "Assistant Commands (inside Claude Code, Antigravity, Cursor, Codex CLI)"]
+             _paint(IVORY, "  %s \u2014 %s" % (APP_TITLE, APP_SUBTITLE), color),
+             _paint(DIM, "  Version %s  |  Vault: %s" % (VERSION, vault_dir()), color),
+             _paint(AMBER, rule, color),
+             "",
+             "  Session Status : %s" % state_str,
+             "  Active Account : %s" % acct,
+             "  Store Location : %s" % vault_dir(),
+             "",
+             _paint(AMBER, sub_rule, color),
+             "  Command Directory (1-Line Operational Reference)",
+             _paint(AMBER, sub_rule, color),
+             "",
+             "Assistant Commands (inside Claude Code, Antigravity, Cursor, Codex CLI)"]
     for cmd, use in ASSISTANT_COMMANDS:
+        lines.append("  %-34s%s" % (cmd, use))
+    lines += ["", "Terminal Commands"]
+    for cmd, use in TERMINAL_COMMANDS:
         lines.append("  %-34s%s" % (cmd, use))
     lines.append("")
     return "\n".join(lines)
 
 
 # ---------------------------------------------------------------- commands
+
+def stdin_has_data():
+    if sys.stdin.isatty():
+        return False
+    if os.name == "nt":
+        try:
+            import msvcrt
+            import ctypes
+            handle = msvcrt.get_osfhandle(sys.stdin.fileno())
+            avail = ctypes.c_ulong()
+            if ctypes.windll.kernel32.PeekNamedPipe(handle, None, 0, None, ctypes.byref(avail), None):
+                return avail.value > 0
+        except Exception:
+            return False
+    else:
+        try:
+            import select
+            r, _, _ = select.select([sys.stdin], [], [], 0)
+            return bool(r)
+        except Exception:
+            return False
+    return False
+
 
 def cmd_open(args):
     ensure_layout()
@@ -618,42 +655,91 @@ def cmd_open(args):
     if auth_path().exists() and info["active"]:
         print("Session already unlocked; %s remaining. Seal it with: fde lock"
               % fmt_remaining(info["remaining"]))
+        print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
         return 0
     if not auth_path().exists():
-        stdin_pass = None
-        if not sys.stdin.isatty():
+        if tty:
+            print("First launch. Choose a vault passphrase (minimum %d characters). It is "
+                  "stored only as a salted PBKDF2-HMAC-SHA256 hash." % MIN_PASSPHRASE)
+            for _ in range(3):
+                first = getpass.getpass("New passphrase: ")
+                second = getpass.getpass("Confirm passphrase: ")
+                if len(first) < MIN_PASSPHRASE:
+                    print("Passphrase must be at least %d characters." % MIN_PASSPHRASE)
+                elif first != second:
+                    print("Passphrases did not match.")
+                else:
+                    set_passphrase(first)
+                    break
+            else:
+                die("Passphrase setup aborted after three attempts.", 1)
+        elif stdin_has_data():
             try:
                 line = sys.stdin.readline()
                 if line:
-                    stdin_pass = line.strip()
+                    p1 = line.strip()
                     sys.stdin.readline()
+                    if len(p1) >= MIN_PASSPHRASE:
+                        set_passphrase(p1)
+                    else:
+                        set_passphrase("fde-vault-local-session")
+                else:
+                    set_passphrase("fde-vault-local-session")
             except Exception:
-                stdin_pass = None
-        if stdin_pass and len(stdin_pass) >= MIN_PASSPHRASE:
-            set_passphrase(stdin_pass)
+                set_passphrase("fde-vault-local-session")
         else:
             set_passphrase("fde-vault-local-session")
+
+        data = create_session()
+        expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
+        print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
+              "run /status." % expires)
+        print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+        return 0
+
+    wait = lockout_remaining()
+    if wait:
+        die("Too many failed attempts. Try again in %d seconds." % wait, 1)
+
+    if tty:
+        print("Enter vault passphrase to unlock session (%s TTL)." % fmt_remaining(SESSION_TTL))
+        for _ in range(3):
+            pw = getpass.getpass("Vault passphrase: ")
+            if verify_passphrase(pw):
+                clear_failures()
+                data = create_session()
+                expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
+                print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
+                      "run /status." % expires)
+                print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+                return 0
+            record_failure()
+            print("Incorrect passphrase.")
+            if lockout_remaining() > 8:
+                break
+        die("Unlock failed.", 1)
+    elif stdin_has_data():
+        try:
+            line = sys.stdin.readline()
+            if line:
+                pw = line.strip()
+                if verify_passphrase(pw):
+                    clear_failures()
+                    data = create_session()
+                    expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
+                    print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
+                          "run /status." % expires)
+                    print("*Next Step: Run '/switch <account>' to mount an account ledger, or '/status' to view portfolio.*")
+                    return 0
+                else:
+                    record_failure()
+                    die("Unlock failed.", 1)
+        except Exception:
+            die("Unlock failed.", 1)
     else:
-        wait = lockout_remaining()
-        if wait:
-            die("Too many failed attempts. Try again in %d seconds." % wait, 1)
-        if not sys.stdin.isatty():
-            try:
-                line = sys.stdin.readline()
-                if line:
-                    pw = line.strip()
-                    if verify_passphrase(pw):
-                        clear_failures()
-                    else:
-                        record_failure()
-                        die("Unlock failed.", 1)
-            except Exception:
-                pass
-    data = create_session()
-    expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
-    print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
-          "run /status." % expires)
-    return 0
+        print("state: locked")
+        print("Run 'fde' in your local terminal to unlock. Never type the passphrase into AI chat.")
+        return 1
 
 
 def cmd_lock(args):

@@ -10,6 +10,7 @@ from pathlib import Path
 
 POINTER_AGENTS = """# Multi-Agent Operating Instructions
 - Engagement governance and operational rules are defined in `.claude/skills/fde-vault/SKILL.md`.
+- Typing 'fde' or '/open' launches the FDE-VAULT Home Screen and command directory.
 - Account ledgers, charters, and deliverables reside in `./.fde-vault/` (session-gated isolation).
 - Run `python3 .claude/skills/fde-vault/scripts/vault_guard.py status` before reading or editing account data.
 - Sensitive credentials must never be written to chat; use local CPU ingestion (`fde ingest`).
@@ -18,6 +19,7 @@ POINTER_AGENTS = """# Multi-Agent Operating Instructions
 
 POINTER_GEMINI = """# Antigravity & Gemini Agent Instructions
 - Forward Deployed Engineer operating system and commands are defined in `.claude/skills/fde-vault/SKILL.md`.
+- Typing 'fde' or '/open' launches the FDE-VAULT Home Screen and command directory.
 - Canonical customer account ledgers reside under `./.fde-vault/` (session-gated isolation).
 - Always verify active account status via `fde status` before modifying any client files.
 - Never paste raw secrets or customer PII into prompts; process notes via `fde ingest --clipboard`.
@@ -26,6 +28,7 @@ POINTER_GEMINI = """# Antigravity & Gemini Agent Instructions
 
 POINTER_CLAUDE = """# Claude Code Agent Instructions
 - Core FDE governance, workflow playbooks, and commands are defined in `.claude/skills/fde-vault/SKILL.md`.
+- Typing 'fde' or '/open' launches the FDE-VAULT Home Screen and command directory.
 - All client account data is stored in the canonical store `./.fde-vault/` (session-gated isolation).
 - Verify session lock and active account with `fde status` before executing account actions.
 - Do not output live credentials in chat; instruct users to run `fde ingest` for local CPU redaction.
@@ -34,6 +37,7 @@ POINTER_CLAUDE = """# Claude Code Agent Instructions
 
 POINTER_CURSOR = """# Cursor Rules for FDE-VAULT
 - Refer to `.claude/skills/fde-vault/SKILL.md` for complete command definitions and core rules.
+- Typing 'fde' or '/open' launches the FDE-VAULT Home Screen and command directory.
 - Account data is located in `./.fde-vault/` and protected by session-gated isolation.
 - Run `fde status` to check active account and repository lock before making changes.
 - Never expose API keys or customer PII in editor chat; direct raw text to `fde ingest`.
@@ -193,7 +197,8 @@ def cmd_init(target_path=None) -> int:
             gi_path.write_text(existing.rstrip() + "\n" + GITIGNORE_SNIPPET + "\n", encoding="utf-8")
             print("  - Updated .gitignore with fde-vault rules")
 
-    print("[fde init] Initialization complete. Run 'fde status' to verify.")
+    print("[fde init] Initialization complete.")
+    print("Installed FDE-VAULT. Type 'fde' in your terminal or inside Claude Code / Antigravity to launch.")
     return 0
 
 

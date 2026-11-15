@@ -51,5 +51,4 @@ elif command -v python >/dev/null 2>&1; then
 fi
 
 echo "[FDE-VAULT] Installation complete."
-echo "  Run 'fde' to launch the executive ledger."
-echo "  Run 'fde init' inside any repository to scaffold governance assets."
+echo "Installed FDE-VAULT. Type 'fde' in your terminal or inside Claude Code / Antigravity to launch."
