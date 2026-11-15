@@ -37,6 +37,20 @@ When the user inputs `fde` or `open`:
    *(or `py -3 .claude/skills/fde-vault/scripts/vault_guard.py open` on Windows, falling back to `python ~/.claude/skills/fde-vault/scripts/vault_guard.py open`).*
    Do NOT run `Get-ChildItem`, file searches, or other commands. Running this command directly plays the kinetic startup animation and displays the live Home Screen.
 2. **Render the Home Screen in Chat:**
+   Your chat response MUST start with the official FDE-VAULT emblem logo code block verbatim so it is visible to the user:
+
+```text
+                    ▄████████▄        
+                  ▄██▀  ██  ▀██▄      ██████   █████▄   ██████
+                 ██▀   ▄██▄   ▀██     ██▄▄     ██  ██   ██▄▄  
+                 ██▄▄▄██████▄▄▄██     ██▀▀     ██  ██   ██▀▀  
+                 ██▀▀▀██████▀▀▀██     ██       █████▀   ██████
+                 ██▄   ▀██▀   ▄██     
+                  ▀██▄  ██  ▄██▀      V A U L T               
+                    ▀████████▀        
+
+                       ● Ready.                        
+```
 
 ## F D E · V A U L T
    Followed by the live session/account status blockquote:
