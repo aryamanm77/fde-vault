@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fde-vault"
+version = "1.0.0"
+description = "Enterprise Forward Deployed Engineer (FDE) operating system and command center"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Enterprise FDE", email = "fde@enterprise.internal" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Software Development :: Build Tools",
+]
+dependencies = []
+
+[project.scripts]
+fde = "fde_vault_pkg.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/fde-vault/fde-vault"
+Repository = "https://github.com/fde-vault/fde-vault.git"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fde_vault_pkg*"]
+
+[tool.setuptools.package-data]
+"fde_vault_pkg" = ["bundled/**/*", "bundled/**/.*"]

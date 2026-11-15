@@ -1,0 +1,9 @@
+#!/bin/sh
+# Local FDE-VAULT launcher. Opens the vault by default; forwards any subcommand.
+here=$(cd "$(dirname "$0")" && pwd)
+g="$here/.claude/skills/fde-vault/scripts/vault_guard.py"
+if [ ! -f "$g" ]; then g="$HOME/.claude/skills/fde-vault/scripts/vault_guard.py"; fi
+if [ ! -f "$g" ]; then echo "fde-vault: vault_guard.py not found" >&2; exit 1; fi
+if [ "$#" -eq 0 ]; then set -- open; fi
+if command -v python3 >/dev/null 2>&1; then exec python3 "$g" "$@"; fi
+exec python "$g" "$@"

@@ -1,0 +1,6 @@
+# >>> fde-vault >>>
+.fde-vault/*
+!.fde-vault/_blueprint/
+# <<< fde-vault <<<
+__pycache__/
+*.pyc

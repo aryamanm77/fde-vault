@@ -1,0 +1,6 @@
+# Cursor Rules for FDE-VAULT
+- Refer to `.claude/skills/fde-vault/SKILL.md` for complete command definitions and core rules.
+- Account data is located in `./.fde-vault/` and protected by session-gated isolation.
+- Run `fde status` to check active account and repository lock before making changes.
+- Never expose API keys or customer PII in editor chat; direct raw text to `fde ingest`.
+- Respect multi-tenant invariants: reject core hacks (RULE-01 to RULE-05) and propose edge adapters.

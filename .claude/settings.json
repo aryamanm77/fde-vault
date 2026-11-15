@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/skills/fde-vault/scripts/prompt_hook.py || py -3 .claude/skills/fde-vault/scripts/prompt_hook.py || python .claude/skills/fde-vault/scripts/prompt_hook.py"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Write|Edit|MultiEdit|Glob|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/skills/fde-vault/scripts/pre_tool_hook.py || py -3 .claude/skills/fde-vault/scripts/pre_tool_hook.py || python .claude/skills/fde-vault/scripts/pre_tool_hook.py"
+          }
+        ]
+      }
+    ]
+  }
+}
