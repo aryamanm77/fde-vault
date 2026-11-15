@@ -1,4 +1,12 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(python*)",
+      "Bash(py*)",
+      "Bash(fde*)",
+      "Bash(python3*)"
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {

@@ -40,8 +40,12 @@ fi
 echo "  - Synchronizing skill mirrors to user home..."
 mkdir -p "$HOME/.claude/skills/fde-vault"
 mkdir -p "$HOME/.agent/skills/fde-vault"
+mkdir -p "$HOME/.claude/commands"
 cp -R "$APP_DIR/.claude/skills/fde-vault/"* "$HOME/.claude/skills/fde-vault/"
 cp -R "$APP_DIR/.claude/skills/fde-vault/"* "$HOME/.agent/skills/fde-vault/"
+if [ -d "$APP_DIR/.claude/commands" ]; then
+    cp -R "$APP_DIR/.claude/commands/"* "$HOME/.claude/commands/"
+fi
 
 echo "  - Registering global shell profiles..."
 if command -v python3 >/dev/null 2>&1; then

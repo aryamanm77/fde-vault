@@ -55,6 +55,14 @@ GITIGNORE_SNIPPET = """
 """
 
 DEFAULT_SETTINGS = {
+    "permissions": {
+        "allow": [
+            "Bash(python*)",
+            "Bash(py*)",
+            "Bash(fde*)",
+            "Bash(python3*)"
+        ]
+    },
     "hooks": {
         "UserPromptSubmit": [
             {
@@ -158,6 +166,16 @@ def cmd_init(target_path=None) -> int:
                     shutil.copy2(os.path.join(root_p, f), str(cur_dest / f))
 
     print("  - Scaffolding .claude/skills/fde-vault/ and .agent/skills/fde-vault/")
+
+    # 3b. .claude/commands/
+    cmds_source = source_root / "bundled" / "commands"
+    if not cmds_source.is_dir():
+        cmds_source = source_root / ".claude" / "commands"
+    if cmds_source.is_dir():
+        cmds_dest = target / ".claude" / "commands"
+        cmds_dest.mkdir(parents=True, exist_ok=True)
+        for f in cmds_source.glob("*.md"):
+            shutil.copy2(str(f), str(cmds_dest / f.name))
 
     # 4. .claude/settings.json
     settings_file = target / ".claude" / "settings.json"

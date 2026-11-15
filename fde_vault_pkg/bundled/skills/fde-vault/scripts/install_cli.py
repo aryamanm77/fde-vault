@@ -253,6 +253,14 @@ def mirror_skill(skill_dir, home, dry):
         if not dry:
             shutil.copytree(str(skill_dir), str(target), dirs_exist_ok=True,
                             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    commands_dir = root / ".claude" / "commands"
+    if commands_dir.is_dir():
+        dest_cmds = home / ".claude" / "commands"
+        log("  %s  %s" % ("would mirror" if dry else "mirrored    ", dest_cmds))
+        if not dry:
+            dest_cmds.mkdir(parents=True, exist_ok=True)
+            for f in commands_dir.glob("*.md"):
+                shutil.copy2(f, dest_cmds / f.name)
 
 
 def main(argv=None):

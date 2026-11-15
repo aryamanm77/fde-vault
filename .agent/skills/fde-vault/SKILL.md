@@ -27,14 +27,13 @@ Activate and render the **FDE-VAULT Home Screen** whenever the user inputs:
 - Or explicitly asks to launch, open, or view the vault directory.
 
 ### Exact Procedure for AI Assistants (Antigravity & Claude Code):
-1. **Check Live State First:**
-   Execute:
-   ```bash
-   python3 .claude/skills/fde-vault/scripts/vault_guard.py status
-   ```
-   *(falling back to `py -3` or `python` on Windows).*
+1. **Instant Response Without Shell Latency:**
+   Do NOT run shell commands, spawn Python processes, or ask user permission when launching the app. Immediately render the official emblem logo and Home Screen directory in chat in under 1 second.
+   To check session status without spawning subshells:
+   - If `./.fde-vault/.session-unlocked` exists, session is `UNLOCKED`.
+   - If `./.fde-vault/.session-unlocked` does not exist, session is `LOCKED`.
 2. **Render the Identical Home Screen in Chat:**
-   Start with the official FDE-VAULT geometric emblem logo:
+   Start immediately with the official FDE-VAULT geometric emblem logo:
    ```text
                     ▄████████▄        
                   ▄██▀  ██  ▀██▄      ██████   █████▄   ██████
@@ -44,6 +43,8 @@ Activate and render the **FDE-VAULT Home Screen** whenever the user inputs:
                  ██▄   ▀██▀   ▄██     
                   ▀██▄  ██  ▄██▀      V A U L T               
                     ▀████████▀        
+
+                       ● Ready.                        
    ```
    ## F D E · V A U L T
    Followed by the live session/account status blockquote:

@@ -45,10 +45,16 @@ if (Get-Command pipx -ErrorAction SilentlyContinue) {
 Write-Host "  - Synchronizing skill mirrors to user home..."
 $claudeSkill = Join-Path $env:USERPROFILE ".claude\skills\fde-vault"
 $agentSkill = Join-Path $env:USERPROFILE ".agent\skills\fde-vault"
+$claudeCmds = Join-Path $env:USERPROFILE ".claude\commands"
 New-Item -ItemType Directory -Path $claudeSkill -Force | Out-Null
 New-Item -ItemType Directory -Path $agentSkill -Force | Out-Null
+New-Item -ItemType Directory -Path $claudeCmds -Force | Out-Null
 Copy-Item -Path (Join-Path $AppDir ".claude\skills\fde-vault\*") -Destination $claudeSkill -Recurse -Force
 Copy-Item -Path (Join-Path $AppDir ".claude\skills\fde-vault\*") -Destination $agentSkill -Recurse -Force
+$appCmds = Join-Path $AppDir ".claude\commands"
+if (Test-Path $appCmds) {
+    Copy-Item -Path (Join-Path $appCmds "*") -Destination $claudeCmds -Recurse -Force
+}
 
 Write-Host "  - Registering global shell profiles..."
 $installerScript = Join-Path $AppDir ".claude\skills\fde-vault\scripts\install_cli.py"
