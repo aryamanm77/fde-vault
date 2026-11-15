@@ -56,19 +56,19 @@ TERMINAL_COMMANDS = [
     ("fde passwd", "Change the vault passphrase"),
 ]
 ASSISTANT_COMMANDS = [
-    ("open", "Cover page, live status, and full command directory"),
+    ("home  (or open)", "Cover page, live status, and full command directory"),
     ("lock", "Seal the vault session immediately"),
-    ("status  (or vaults)", "Verify index drift and show portfolio accounts"),
-    ("switch <account>  (or start)", "Create or mount an account ledger"),
-    ("discover", "Day-1 technical discovery interview and charter"),
-    ("sync [notes]  (or log)", "Process scrubbed notes into the active ledger"),
-    ('scope "<request>"', "Check a proposed request against scope boundaries"),
-    ('preflight "<proposal>"  (or guard)', "Check an architectural proposal against core rules"),
-    ('incident "<issue>"', "Log a live production issue and mitigation runbook"),
-    ('rfc "<title>"', "Draft an upstream engineering RFC"),
-    ("brief  (or report)", "One-page executive status brief for leadership"),
-    ("handoff  (or done)", "Transition runbook, core pitch, and hardcover book"),
-    ("steps", "Engagement table of contents and milestone roadmap"),
+    ("accounts  (or status, vaults)", "View all customer accounts and active session status"),
+    ("select <account>  (or switch, start)", "Select or create a customer account"),
+    ("setup  (or discover)", "Day-1 technical kickoff and requirements setup"),
+    ("notes [text]  (or sync, log)", "Save and organize scrubbed notes into account ledger"),
+    ('check-request "<request>"  (or scope)', "Check if a customer request is within project scope"),
+    ('check-code "<proposal>"  (or preflight, guard)', "Check architectural proposal against core rules"),
+    ('issue "<problem>"  (or incident)', "Log a live production issue and fix runbook"),
+    ('proposal "<feature>"  (or rfc)', "Draft an engineering design proposal document"),
+    ("summary  (or brief, report)", "One-page executive status summary for leadership"),
+    ("finish  (or handoff, done)", "Complete engagement, transition runbook, and hardcover book"),
+    ("roadmap  (or steps)", "Engagement milestone roadmap and task checklist"),
 ]
 
 BLUEPRINT = {
@@ -449,7 +449,7 @@ def active_account(required=True):
     if name and ACCOUNT_RE.match(name) and (vault_dir() / name / "brain.md").exists():
         return name
     if required:
-        die("No active account. Run 'switch <account>' first.", 4)
+        die("No active account. Run 'select <account>' (or 'switch <account>') first.", 4)
     return ""
 
 
@@ -664,7 +664,7 @@ def cmd_open(args):
     if auth_path().exists() and info["active"]:
         print("Session already unlocked; %s remaining. Seal it with: fde lock"
               % fmt_remaining(info["remaining"]))
-        print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
+        print("*Next Step: Run 'select <account>' (or 'switch <account>') to mount an account ledger, or 'accounts' to view portfolio.*")
         return 0
     if not auth_path().exists():
         if tty:
@@ -703,7 +703,7 @@ def cmd_open(args):
         expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
         print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
               "run status." % expires)
-        print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
+        print("*Next Step: Run 'select <account>' (or 'switch <account>') to mount an account ledger, or 'accounts' to view portfolio.*")
         return 0
 
     wait = lockout_remaining()
@@ -720,7 +720,7 @@ def cmd_open(args):
                 expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
                 print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
                       "run status." % expires)
-                print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
+                print("*Next Step: Run 'select <account>' (or 'switch <account>') to mount an account ledger, or 'accounts' to view portfolio.*")
                 return 0
             record_failure()
             print("Incorrect passphrase.")
@@ -738,7 +738,7 @@ def cmd_open(args):
                     expires = datetime.datetime.fromtimestamp(data["expires"]).strftime("%H:%M")
                     print("Vault unlocked. Session ends at %s local time. Return to your AI tool and "
                           "run status." % expires)
-                    print("*Next Step: Run 'switch <account>' to mount an account ledger, or 'status' to view portfolio.*")
+                    print("*Next Step: Run 'select <account>' (or 'switch <account>') to mount an account ledger, or 'accounts' to view portfolio.*")
                     return 0
                 else:
                     record_failure()

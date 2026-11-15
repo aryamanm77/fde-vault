@@ -144,25 +144,25 @@ Typing `fde` in an interactive terminal triggers the geometric logo animation, f
 | `fde render-dashboard` | Compiles the active account into a hardcover book HTML artifact. |
 | `fde passwd` | Updates the master vault authentication passphrase. |
 
-### Assistant Commands (Plain Words in AI Chat: Antigravity, Claude Code, Cursor, Codex CLI)
+### Assistant Commands (Everyday Words in AI Chat: Antigravity, Claude Code, Cursor, Codex CLI)
 
-When working inside Claude Code, Antigravity, Cursor, or Codex CLI, type plain words directly in chat:
+When working inside Claude Code, Antigravity, Cursor, or Codex CLI, type simple everyday words directly in chat:
 
-| Command | Governance Action |
+| Command | Everyday Meaning |
 | :--- | :--- |
-| `open` | Cover page, live status, and full command directory. |
+| `home` *(or `open`)* | Cover page, live status, and full command directory. |
 | `lock` | Seals the local vault session immediately. |
-| `status` *(or `vaults`)* | Renders high-level health report of active engagement and portfolio. |
-| `switch <account>` *(or `start`)* | Switches active context; creates account directory if not present. |
-| `discover` | Conducts stakeholder, architecture, and boundary discovery interview. |
-| `sync [notes]` *(or `log`)* | Processes entries from `inbox.md` into `timeline.md` and `brain.md`. |
-| `scope "<request>"` | Evaluates proposed feature request against agreed boundaries. |
-| `preflight "<proposal>"` *(or `guard`)* | Validates proposal against the core rules before touching code. |
-| `incident "<issue>"` | Initiates incident triage: severity, timeline, and mitigation runbook. |
-| `rfc "<title>"` | Drafts a formal Request for Comments for an architectural deviation. |
-| `brief` *(or `report`)* | Prepares an executive status briefing for non-technical stakeholders. |
-| `handoff` *(or `done`)* | Generates a transition manual for customer engineering teams. |
-| `steps` | Engagement table of contents and milestone roadmap. |
+| `accounts` *(or `status`, `vaults`)* | Renders high-level health report of active engagement and portfolio. |
+| `select <account>` *(or `switch`, `start`)* | Switches active context; creates account directory if not present. |
+| `setup` *(or `discover`)* | Conducts stakeholder, architecture, and boundary discovery interview. |
+| `notes [text]` *(or `sync`, `log`)* | Processes entries from `inbox.md` into `timeline.md` and `brain.md`. |
+| `check-request "<request>"` *(or `scope`)* | Evaluates proposed feature request against agreed boundaries. |
+| `check-code "<proposal>"` *(or `preflight`, `guard`)* | Validates proposal against the core rules before touching code. |
+| `issue "<problem>"` *(or `incident`)* | Initiates incident triage: severity, timeline, and mitigation runbook. |
+| `proposal "<feature>"` *(or `rfc`)* | Drafts an engineering design proposal for architectural changes. |
+| `summary` *(or `brief`, `report`)* | Prepares an executive status briefing for non-technical stakeholders. |
+| `finish` *(or `handoff`, `done`)* | Generates a transition manual and hardcover book for customer teams. |
+| `roadmap` *(or `steps`)* | Engagement milestone roadmap and checklist. |
 
 ---
 

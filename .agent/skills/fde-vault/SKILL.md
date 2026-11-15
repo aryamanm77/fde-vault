@@ -58,21 +58,21 @@ When the user inputs `fde` or `open`:
    
    Followed by the exact 1-line-per-command Home Screen directory table (plain words only):
 
-| Command | Operational Purpose |
+| Command | Everyday Meaning |
 | :--- | :--- |
-| `open` | Cover page, live status, and full command directory |
+| `home` (or `open`) | Cover page, live status, and full command directory |
 | `lock` | Seal the vault session immediately |
-| `status` | Verify index drift and show portfolio accounts |
-| `switch <account>` | Create or mount an account ledger |
-| `discover` | Day-1 technical discovery interview and charter |
-| `sync [notes]` | Ingest and process scrubbed notes into ledger |
-| `scope "<request>"` | Evaluate a proposed request against scope boundaries |
-| `preflight "<proposal>"` | Check an architectural proposal against core rules |
-| `incident "<issue>"` | Log a live production issue and mitigation runbook |
-| `rfc "<title>"` | Draft a formal upstream engineering RFC |
-| `brief` | One-page executive status brief for leadership |
-| `handoff` | Transition runbook, core pitch, and hardcover book |
-| `steps` | Engagement table of contents and milestone roadmap |
+| `accounts` (or `status`, `vaults`) | View all customer accounts and active session status |
+| `select <account>` (or `switch`, `start`) | Select or create a customer account |
+| `setup` (or `discover`) | Day-1 technical kickoff and requirements setup |
+| `notes [text]` (or `sync`, `log`) | Save and organize scrubbed notes into account ledger |
+| `check-request "<request>"` (or `scope`) | Check if a customer request is within project scope |
+| `check-code "<proposal>"` (or `preflight`, `guard`) | Check architectural proposal against core rules |
+| `issue "<problem>"` (or `incident`) | Log a live production issue and fix runbook |
+| `proposal "<feature>"` (or `rfc`) | Draft an engineering design proposal document |
+| `summary` (or `brief`, `report`) | One-page executive status summary for leadership |
+| `finish` (or `handoff`, `done`) | Complete engagement, transition runbook, and hardcover book |
+| `roadmap` (or `steps`) | Engagement milestone roadmap and task checklist |
 
 | Terminal Command | Operational Purpose |
 | :--- | :--- |
@@ -112,42 +112,43 @@ When the user inputs `fde` or `open`:
 
 ## Complete Command Suite
 
-- `open` (or `/open`) — Show the **FDE-VAULT** Cover Page and full Command Directory
-  (`GUARD open` prints it in a terminal). Remind the user to launch with `fde` locally.
-- `lock` (or `/lock`) — Run `GUARD lock`. The vault is sealed immediately.
-- `status` (or `/status`, `vaults`, `/vaults`) — Run `GUARD reindex --check`, then `GUARD status`.
+- `home` (or `open`) — Show the **FDE-VAULT** Cover Page and full Command Directory
+  (`GUARD open` prints it in a terminal).
+- `lock` — Run `GUARD lock`. The vault is sealed immediately.
+- `accounts` (or `status`, `vaults`) — Run `GUARD reindex --check`, then `GUARD status`.
   Report any drift and show the Portfolio Index of all accounts.
-- `switch <account>` (or `/switch`, `start`, `/start`) — Run `GUARD switch <account>`. It
+- `select <account>` (or `switch`, `start`) — Run `GUARD switch <account>`. It
   sanitizes the name to `[a-z0-9-]`, clones `./.fde-vault/_blueprint/` if the
   account is new, binds the working directory in `brain.md`, writes
   `.active-vault`, and updates `index.json` atomically. For a new account follow
   Playbook A, then present the opening Chapter leaf.
-- `discover` (or `/discover`) — Generate a tailored Day-1 Technical Discovery charter from
+- `setup` (or `discover`) — Generate a tailored Day-1 Technical Discovery charter from
   Playbook B and record each answer into `brain.md` under `Discovery Answers`.
-- `sync [notes]` (or `/sync`, `log`, `/log`) — Read the scrubbed `inbox.md`. If the user gave
+- `notes [text]` (or `sync`, `log`) — Read the scrubbed `inbox.md`. If the user gave
   inline notes, pass them through `GUARD redact --text` first and use only the
   scrubbed output. Update `brain.md`, then append a dated diary entry with
   `GUARD log --tier GREEN|YELLOW|RED`, using `[CONFIG-TWEAK]`,
   `[EDGE-ADAPTER]`, or `[CORE-HACK]` respectively. Then run `GUARD inbox-clear`
   and `GUARD reindex`.
-- `scope "<request>"` (or `/scope`) — Compare the request with `IN SCOPE` and `OUT OF SCOPE`
+- `check-request "<request>"` (or `scope`) — Compare the request with `IN SCOPE` and `OUT OF SCOPE`
   in `brain.md`. Return `WITHIN SCOPE`, `SCOPE EXPANSION`, or `OUT OF SCOPE`
   with the matching rule ID, and draft a diplomatic stakeholder response.
-- `preflight "<proposal>"` (or `/preflight`, `guard`, `/guard`) — Validate the proposal against
+- `check-code "<proposal>"` (or `preflight`, `guard`) — Validate the proposal against
   `references/core-rules.md`. Return `SAFE (GREEN)`, `CAUTION (YELLOW)`, or
   `STOP (RED)` with rule citations and compliant alternatives.
-- `incident "<issue>"` (or `/incident`) — Follow Playbook F: log with a UTC timestamp, list
+- `issue "<problem>"` (or `incident`) — Follow Playbook F: log with a UTC timestamp, list
   `YELLOW` and `RED` deviations as candidate root causes, give containment and
   permanent mitigation steps, and elevate status to `RED` with `GUARD set status RED`.
-- `rfc "<title>"` (or `/rfc`) — Draft a formal upstream RFC with Playbook C, saved to
+- `proposal "<feature>"` (or `rfc`) — Draft a formal upstream RFC with Playbook C, saved to
   `./.fde-vault/<active>/outputs/rfc-<slug>.md`.
-- `brief` (or `/brief`, `report`, `/report`) — Generate a one-page Executive Status Brief (Playbook E),
+- `summary` (or `brief`, `report`) — Generate a one-page Executive Status Brief (Playbook E),
   save it to `./.fde-vault/<active>/outputs/manager-brief.md`, and present it in
   book-page format.
-- `handoff` (or `/handoff`, `done`, `/done`) — Follow Playbook D: compile
+- `finish` (or `handoff`, `done`) — Follow Playbook D: compile
   `outputs/handoff-runbook.md` and `outputs/core-feature-pitch.md`, then run
   `GUARD render-dashboard` to produce the interactive page-turning hardcover
   book at `outputs/dashboard.html`.
+- `roadmap` (or `steps`) — Engagement table of contents and milestone roadmap.
 - `steps` (or `/steps`) — Run `GUARD steps` and present the **Engagement Table of Contents**
   with `[Current Chapter]` aligned to the active account's `phase` and `status`.
 
