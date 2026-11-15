@@ -19,40 +19,24 @@ python3 .claude/skills/fde-vault/scripts/vault_guard.py
 Fall back to `python` or `py -3` when `python3` is unavailable, and to
 `~/.claude/skills/fde-vault/scripts/vault_guard.py` when the project copy is absent.
 Do NOT run file search commands (such as Get-ChildItem, find, or glob scans) to locate `vault_guard.py`.
-For launching the app (`fde` or `open`), do NOT invoke Python, PowerShell, or any shell tool at all.
 
 ## AI Chat Entry Triggers (fde, open)
 
-Activate and render the **FDE-VAULT Home Screen** whenever the user inputs:
+Activate and launch the **FDE-VAULT Home Screen & Animation** whenever the user inputs:
 - `fde` (case-insensitive standalone word)
 - `open` (case-insensitive word)
 - Or explicitly asks to launch, open, or view the vault directory.
 
-### CRITICAL EXECUTION RULES FOR AI ASSISTANTS:
-1. **DO NOT RUN ANY TOOLS OR COMMANDS:**
-   - Do NOT run `Get-ChildItem`, `find`, `dir`, `ls`, or any filesystem searches.
-   - Do NOT run `python`, `py`, bash, or PowerShell commands.
-   - Do NOT ask user permission to execute commands.
-2. **DO NOT SEARCH FOR ANY FILES:**
-   - Assume `./.fde-vault/` and its status are available.
-   - If `./.fde-vault/.session-unlocked` exists, status is `UNLOCKED`. Otherwise `LOCKED`.
-3. **MANDATORY LOGO OUTPUT (NEVER OMIT):**
-   - Your response MUST begin verbatim with this exact raw text code block. You MUST NOT omit, shorten, or replace this logo under any circumstances:
-
-```text
-                    ▄████████▄        
-                  ▄██▀  ██  ▀██▄      ██████   █████▄   ██████
-                 ██▀   ▄██▄   ▀██     ██▄▄     ██  ██   ██▄▄  
-                 ██▄▄▄██████▄▄▄██     ██▀▀     ██  ██   ██▀▀  
-                 ██▀▀▀██████▀▀▀██     ██       █████▀   ██████
-                 ██▄   ▀██▀   ▄██     
-                  ▀██▄  ██  ▄██▀      V A U L T               
-                    ▀████████▀        
-
-                       ● Ready.                        
-```
-
-4. **IMMEDIATELY FOLLOW WITH THE HOME SCREEN DIRECTORY:**
+### PROCEDURE FOR AI ASSISTANTS (Claude Code & Antigravity):
+When the user inputs `fde` or `open`:
+1. **Execute the Launcher Script Directly:**
+   Execute via your bash tool:
+   ```bash
+   python .claude/skills/fde-vault/scripts/vault_guard.py open
+   ```
+   *(or `py -3 .claude/skills/fde-vault/scripts/vault_guard.py open` on Windows, falling back to `python ~/.claude/skills/fde-vault/scripts/vault_guard.py open`).*
+   Do NOT run `Get-ChildItem`, file searches, or other commands. Running this command directly plays the kinetic startup animation and displays the live Home Screen.
+2. **Render the Home Screen in Chat:**
 
 ## F D E · V A U L T
    Followed by the live session/account status blockquote:

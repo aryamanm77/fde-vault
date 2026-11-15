@@ -557,7 +557,7 @@ def _box_row(text=""):
 
 
 def play_animation(color):
-    if color and os.name == "nt" and sys.stdout.isatty():
+    if color and os.name == "nt":
         os.system("")
     out = sys.stdout
     try:
@@ -568,28 +568,19 @@ def play_animation(color):
     except Exception:
         logo_anim = None
 
-    if logo_anim is not None:
-        if sys.stdout.isatty() and color:
-            logo_anim.play_startup_animation(skip=False)
-        else:
-            fn, left, _ = logo_anim._layout()
-            fn = fn or logo_anim._frame_full
-            left = left or 2
-            mode = logo_anim._color_mode() if color else "none"
-            lines = fn(logo_anim.DURATION, logo_anim._Ink(mode), left)
-            out.write("\n" + "\n".join(lines) + "\n\n")
+    if color and logo_anim is not None:
+        logo_anim.play_startup_animation(skip=False)
+    else:
+        out.write("\n  " + _paint(IVORY, "F D E - V A U L T", color) + "\n\n")
+        steps = ["[1/3] Mounting isolated account ledger...",
+                 "[2/3] Arming Zero-Chat-Exposure redaction engine...",
+                 "[3/3] Opening engineering journal..."]
+        for step in steps:
+            out.write("  " + _paint(IVORY, step, color) + "\n")
             out.flush()
-
-    out.write("  " + _paint(IVORY, "F D E - V A U L T", color) + "\n\n")
-    steps = ["[1/3] Mounting isolated account ledger...",
-             "[2/3] Arming Zero-Chat-Exposure redaction engine...",
-             "[3/3] Opening engineering journal..."]
-    for step in steps:
-        out.write("  " + _paint(IVORY, step, color) + "\n")
+            time.sleep(0.24)
+        out.write("\n")
         out.flush()
-        time.sleep(0.24)
-    out.write("\n")
-    out.flush()
 
 
 def cover_text(color=False):

@@ -333,11 +333,6 @@ def should_skip(skip=False):
         return True
     if os.environ.get("FDE_NO_ANIM", "").strip().lower() in ("1", "true", "yes", "on"):
         return True
-    try:
-        if not sys.stdout.isatty():
-            return True
-    except Exception:
-        return True
     return os.environ.get("TERM") == "dumb"
 
 
@@ -347,7 +342,7 @@ def _layout():
         return _frame_full, (cols - _COMP_W) // 2, 10
     if cols >= len(_TINY) + 2:
         return _frame_tiny, (cols - len(_TINY)) // 2, 3
-    return None, 0, 0
+    return _frame_full, 2, 10
 
 
 def play_startup_animation(skip: bool = False) -> None:
