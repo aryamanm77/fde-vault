@@ -1,6 +1,6 @@
 # Cursor Rules for FDE-VAULT
 - Refer to `.claude/skills/fde-vault/SKILL.md` for complete command definitions and core rules.
-- Typing 'fde' or 'open' launches the FDE-VAULT Home Screen and command directory.
+- When 'fde' or 'open' is received, DO NOT run shell commands or file searches (NEVER run Get-ChildItem or python). Immediately output the official FDE-VAULT geometric emblem logo code block verbatim, followed by the Home Screen directory table.
 - Account data is located in `./.fde-vault/` and protected by session-gated isolation.
 - Run `fde status` to check active account and repository lock before making changes.
 - Never expose API keys or customer PII in editor chat; direct raw text to `fde ingest`.
