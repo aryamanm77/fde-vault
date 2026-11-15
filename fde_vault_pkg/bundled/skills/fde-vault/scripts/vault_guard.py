@@ -557,7 +557,7 @@ def _box_row(text=""):
 
 
 def play_animation(color):
-    if os.name == "nt":
+    if color and os.name == "nt" and sys.stdout.isatty():
         os.system("")
     out = sys.stdout
     top = "\u2554" + "\u2550" * (BOX_WIDTH - 2) + "\u2557"
@@ -567,16 +567,16 @@ def play_animation(color):
     for line in (top, _box_row()):
         out.write("  " + _paint(AMBER, line, color) + "\n")
         out.flush()
-        time.sleep(0.04)
+        time.sleep(0.025)
     for i in range(len(title) + 1):
         out.write("\r  " + _paint(IVORY, _box_row(title[:i]), color))
         out.flush()
-        time.sleep(0.02)
+        time.sleep(0.012)
     out.write("\n")
     for line in (_box_row(APP_SUBTITLE), _box_row(), bottom):
         out.write("  " + _paint(AMBER, line, color) + "\n")
         out.flush()
-        time.sleep(0.04)
+        time.sleep(0.025)
     out.write("\n")
     steps = ["[1/3] Mounting isolated account ledger...",
              "[2/3] Arming Zero-Chat-Exposure redaction engine...",
@@ -584,7 +584,7 @@ def play_animation(color):
     for step in steps:
         out.write("  " + _paint(IVORY, step, color) + "\n")
         out.flush()
-        time.sleep(0.17)
+        time.sleep(0.15)
     out.write("\n")
     out.flush()
 
